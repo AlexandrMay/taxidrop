@@ -9,6 +9,7 @@ import cucumber.api.java.en.When;
 import stepDefinations.StepData;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class admin_registration extends ReusableMethods {
 
@@ -16,12 +17,6 @@ public class admin_registration extends ReusableMethods {
 
     public admin_registration(StepData data) {
         this.data = data;
-    }
-
-
-    @Given("^Sending request with email \"([^\"]*)\" and password \"([^\"]*)\"$")
-    public void sending_request_with_email_something_and_password_something(String strArg1, String strArg2) throws Throwable {
-
     }
 
     @When("^POST request send to resource (.+)$")
@@ -46,7 +41,7 @@ public class admin_registration extends ReusableMethods {
     @Given("^Sending request with correct token and using (.+), (.+), (.+), (.+), (.+), (.+) parameters$")
     public void sending_request_with_correct_token(String firstname, String lastname, String phonenumber, String email, int roleid, String password) throws Throwable {
             data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_one")).header("Content-Type", "application/json").body("{\"photo\":" + data.photo + ",\"first_name\":" + firstname + ",\"last_name\":" + lastname + ",\"phone_number\":" + phonenumber + ",\"email\":" + email + ", \"password\":" + convert(password) + ", \"role_id\":" + roleid + "}");
-        }
+    }
 
     @Given("^Sending request with generated API key for admin using$")
     public void sending_request_with_generated_api_key_for_admin_using_something_and_something(DataTable table) throws Throwable {
@@ -78,6 +73,28 @@ public class admin_registration extends ReusableMethods {
         System.out.println(data.response.prettyPrint());
         data.r = rawToString(data.response);
     }
+
+    @Given("^Sending request with incorrect token and parameters (.+), (.+), (.+), (.+), (.+), (.+)$")
+    public void sending_request_with_incorrect_token(String firstname, String lastname, String phonenumber, String email, int roleid, String password) throws Throwable {
+        data.request = given().header("Authorization", "Bearer 1" + properties.getProperty("admin_one")).header("Content-Type", "application/json").body("{\"photo\":" + data.photo + ",\"first_name\":" + firstname + ",\"last_name\":" + lastname + ",\"phone_number\":" + phonenumber + ",\"email\":" + email + ", \"password\":" + convert(password) + ", \"role_id\":" + roleid + "}");
+    }
+
+    @And("^Response contains error$")
+    public void response_contains_error(DataTable table) throws Throwable {
+        data.json = data.response.then().body(table.raw().get(0).get(0), equalTo(table.raw().get(0).get(1)));
+    }
+
+    @Then("^Statuscode (.+) is received$")
+    public void statuscode_is_received(int statuscode) throws Throwable {
+        data.json = data.response.then().assertThat().statusCode(statuscode);
+    }
+
+    @And("^Response contains (.+) and (.+)$")
+    public void response_contains_and(String errorkey, String errortext) throws Throwable {
+        data.json = data.response.then().body(errorkey, equalTo(errortext));
+    }
+
+
 
 
 }
