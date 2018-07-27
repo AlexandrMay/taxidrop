@@ -40,7 +40,16 @@ public class admin_registration extends ReusableMethods {
 
     @Given("^Sending request with correct token and using (.+), (.+), (.+), (.+), (.+), (.+) parameters$")
     public void sending_request_with_correct_token(String firstname, String lastname, String phonenumber, String email, int roleid, String password) throws Throwable {
-            data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_one")).header("Content-Type", "application/json").body("{\"photo\":" + data.photo + ",\"first_name\":" + firstname + ",\"last_name\":" + lastname + ",\"phone_number\":" + phonenumber + ",\"email\":" + email + ", \"password\":" + convert(password) + ", \"role_id\":" + roleid + "}");
+        String decryptedPass = password;
+        String encryptedPass = convert(password);
+        String result;
+        if (decryptedPass.equals("\"pass\"")) {
+            result = encryptedPass;
+        } else {
+            result = decryptedPass;
+        }
+        System.out.println(result);
+        data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_one")).header("Content-Type", "application/json").body("{\"photo\":" + data.photo + ",\"first_name\":" + firstname + ",\"last_name\":" + lastname + ",\"phone_number\":" + phonenumber + ",\"email\":" + email + ", \"password\":" + result + ", \"role_id\":" + roleid + "}");
     }
 
     @Given("^Sending request with generated API key for admin using$")
@@ -63,7 +72,7 @@ public class admin_registration extends ReusableMethods {
 
     @Given("^Sending request with generated API key for admin with$")
     public void sending_request_with_generated_api_key_for_admin_with(DataTable table) throws Throwable {
-        data.request = given().header("Authorization", "Key " + properties.getProperty("admin_token")).header("Content-Type", "application/json").body("{\"email\":" + table.raw().get(0).get(0) +"}");
+        data.request = given().header("Authorization", "Key " + properties.getProperty("admin_token")).header("Content-Type", "application/json").body("{\"email\":" + table.raw().get(0).get(0) + "}");
 
     }
 
@@ -94,7 +103,45 @@ public class admin_registration extends ReusableMethods {
         data.json = data.response.then().body(errorkey, equalTo(errortext));
     }
 
+    @Given("^Sending request with (.+) using (.+) and (.+)$")
+    public void sending_request_with_using_and(String admintoken, String email, String password) throws Throwable {
+        String receivedData = admintoken;
+        String realToken = properties.getProperty("admin_token");
+        String resultToken;
+        if (receivedData.equals("\"right\"")) {
+            resultToken = realToken;
+        } else {
+            resultToken = admintoken;
+        }
+        String receivedPass = password;
+        String modifiedPass = convert(password);
+        String resultPass;
+        if (receivedPass.equals("\"pass\"") || (receivedPass.equals("\"wrong\""))) {
+            resultPass = modifiedPass;
+        }
+        else {
+            resultPass = password;
+        }
+        data.request = given().header("Authorization", "Key " + resultToken).header("Content-Type", "application/json").body("{\"email\":" + email + ", \"password\":" + resultPass + "}");
+    }
 
+    @Given("^Sending request with (.+) using (.+)$")
+    public void sending_request_with_using_and(String admintoken, String email) throws Throwable {
+        String receivedData = admintoken;
+        String realToken = properties.getProperty("admin_token");
+        String resultToken;
+        if (receivedData.equals("\"right\"")) {
+            resultToken = realToken;
+        } else {
+            resultToken = admintoken;
+        }
+        data.request = given().header("Authorization", "Key " + resultToken).header("Content-Type", "application/json").body("{\"email\":" + email + "}");
+    }
 
-
+    @When("^PUT request send to resource (.+)$")
+    public void post_request_send_to(String resource) throws Throwable {
+        data.response = data.request.when().put(resource);
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
 }

@@ -18,7 +18,6 @@ public abstract class ReusableMethods {
 
     public static String convert(String pass) {
         String md5Hex = DigestUtils.md5Hex(pass);
-        System.out.println("MY PASSWORD IS "+md5Hex);
         String answer = "\"" + md5Hex + "\"";
         return answer;
     }
@@ -37,7 +36,5 @@ public abstract class ReusableMethods {
         String resp = response.asString();
         return resp;
     }
-
-
 
 }
