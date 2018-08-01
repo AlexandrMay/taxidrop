@@ -16,5 +16,6 @@ public class StepData {
     public JsonPath js;
     public static int adminId;
     public static String adminAuthToken;
+    public static int passengerId;
     public static String photo = "\"base64\"";
 }

@@ -48,13 +48,13 @@ public class admin_registration extends ReusableMethods {
         } else {
             result = decryptedPass;
         }
-        System.out.println(result);
+        System.out.println("МОЙ ПАРОЛЬ " + encryptedPass);
         data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_one")).header("Content-Type", "application/json").body("{\"photo\":" + data.photo + ",\"first_name\":" + firstname + ",\"last_name\":" + lastname + ",\"phone_number\":" + phonenumber + ",\"email\":" + email + ", \"password\":" + result + ", \"role_id\":" + roleid + "}");
     }
 
     @Given("^Sending request with generated API key for admin using$")
     public void sending_request_with_generated_api_key_for_admin_using_something_and_something(DataTable table) throws Throwable {
-        data.request = given().header("Authorization", "Key " + properties.getProperty("admin_token")).header("Content-Type", "application/json").body("{\"email\":" + table.raw().get(0).get(0) + ",\"password\":" + convert(table.raw().get(0).get(1)) + "}");
+        data.request = given().header("Authorization", "Key " + passengerAdminToken()).header("Content-Type", "application/json").body("{\"email\":" + table.raw().get(0).get(0) + ",\"password\":" + convert(table.raw().get(0).get(1)) + "}");
     }
 
     @When("^POST request send to \"([^\"]*)\"$")
@@ -72,7 +72,7 @@ public class admin_registration extends ReusableMethods {
 
     @Given("^Sending request with generated API key for admin with$")
     public void sending_request_with_generated_api_key_for_admin_with(DataTable table) throws Throwable {
-        data.request = given().header("Authorization", "Key " + properties.getProperty("admin_token")).header("Content-Type", "application/json").body("{\"email\":" + table.raw().get(0).get(0) + "}");
+        data.request = given().header("Authorization", "Key " + passengerAdminToken()).header("Content-Type", "application/json").body("{\"email\":" + table.raw().get(0).get(0) + "}");
 
     }
 
@@ -103,10 +103,10 @@ public class admin_registration extends ReusableMethods {
         data.json = data.response.then().body(errorkey, equalTo(errortext));
     }
 
-    @Given("^Sending request with (.+) using (.+) and (.+)$")
+    @Given("^Sending some request with (.+) using (.+) and (.+)$")
     public void sending_request_with_using_and(String admintoken, String email, String password) throws Throwable {
         String receivedData = admintoken;
-        String realToken = properties.getProperty("admin_token");
+        String realToken = passengerAdminToken();
         String resultToken;
         if (receivedData.equals("\"right\"")) {
             resultToken = realToken;
@@ -125,10 +125,10 @@ public class admin_registration extends ReusableMethods {
         data.request = given().header("Authorization", "Key " + resultToken).header("Content-Type", "application/json").body("{\"email\":" + email + ", \"password\":" + resultPass + "}");
     }
 
-    @Given("^Sending request with (.+) using (.+)$")
+    @Given("^Sending error request with (.+) using (.+)$")
     public void sending_request_with_using_and(String admintoken, String email) throws Throwable {
         String receivedData = admintoken;
-        String realToken = properties.getProperty("admin_token");
+        String realToken = passengerAdminToken();
         String resultToken;
         if (receivedData.equals("\"right\"")) {
             resultToken = realToken;

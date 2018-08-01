@@ -1,6 +1,6 @@
 Feature: admin_registration
 
-
+@NeedTo
   Scenario Outline: admin_add
     Given Sending request with correct token and using <first_name>, <last_name>, <phone_number>, <email>, <role_id>, <password> parameters
     When POST request send to resource <resource>
@@ -12,7 +12,7 @@ Feature: admin_registration
     |"Auto"    |"Bot"    |"+380664853399"|"maysalexandr@gmail.com"|"pass"|/admin/admin.add|1|
 
 
-
+  @NeedTo
     Scenario Outline: admin_add with incorrect token
       Given Sending request with incorrect token and parameters <first_name>, <last_name>, <phone_number>, <email>, <role_id>, <password>
       When POST request send to "/admin/admin.add"
@@ -23,7 +23,7 @@ Feature: admin_registration
         |first_name|last_name|phone_number   |email             |password|role_id|
         |"Auto"    |"Bot"    |"+380664853399"|"maysalexandr@gmail.com"|"pass"|1|
 
-
+  @NeedTo
       Scenario Outline: admin_add errors
         Given Sending request with correct token and using <first_name>, <last_name>, <phone_number>, <email>, <role_id>, <password> parameters
         When POST request send to resource <resource>
@@ -37,16 +37,16 @@ Feature: admin_registration
           |"Auto"    |"Bot"    |"+380664853397"|"maysalexandr1@gmail.com"|"pass"|/admin/admin.add| 10  |404|error.message|Role with ID '10' does not exist.|
           |"Auto"    |"Bot"    |"+380664853397"|"maysalexandr1@gmail.com"|"pass"|/admin/admin.ad| 1  |404|message|Requested resource were not found at given endpoint.|
           |"Auto"    |"Bot"    |"+380664853397"|"maysalexandr1@gmail.com"|"anypass"|/admin/admin.add| 1  |400|error.message|Incorrect request body. Parameters: 'password' are malformed or incorrect.|
-
+  @NeedTo
   Scenario: admin_authorization
       Given Sending request with generated API key for admin using
       |"maysalexandr@gmail.com"|"pass"|
       When POST request send to "/admin/authorization"
       Then Status-code "200" is received
       And Response contains authorization token
-
+  @NeedTo
     Scenario Outline: admin_authorization errors
-      Given Sending request with <admin_token> using <email> and <password>
+      Given Sending some request with <admin_token> using <email> and <password>
       When POST request send to resource <resource>
       Then Statuscode <status-code> is received
       And Response contains <error_key> and <error_text>
@@ -60,16 +60,16 @@ Feature: admin_registration
       |"right"    |"maysalexandr@gmail.com"|"wrong"|/admin/authorization|400|error.message|Password is incorrect.|
       |"right"    |"maysalexandr@gmail.com"|""|/admin/authorization|400|error.message|Incorrect request body. Parameters: 'password' are required.|
 
-
+  @NeedTo
   Scenario: admin_password_recovery
       Given Sending request with generated API key for admin with
       |"maysalexandr@gmail.com"|
       When PUT request send to "/admin/password.recovery"
       Then Status-code "200" is received
 
-
+  @NeedTo
     Scenario Outline: admin_password_recovery errors
-      Given Sending request with <admin_token> using <email>
+      Given Sending error request with <admin_token> using <email>
       When PUT request send to resource <resource>
       Then Statuscode <status-code> is received
       And Response contains <error_key> and <error_text>
