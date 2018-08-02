@@ -6,6 +6,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import stepDefinations.StepData;
 
 import static io.restassured.RestAssured.given;
@@ -19,16 +20,37 @@ public class admin_registration extends ReusableMethods {
         this.data = data;
     }
 
-    @When("^POST request send to resource (.+)$")
-    public void request_send_to_resource_something(String strArg1) throws Throwable {
-        data.response = data.request.when().post(strArg1);
+    private String resultPassword;
+    private String resultToken;
+
+
+    //admin_add
+
+    @Given("^Sending admin_add request with$")
+    public void sending_adminadd_request_with(DataTable table) throws Throwable {
+        resultPassword = convert(table.raw().get(0).get(5));
+        System.out.println("ПАРОЛЬ АДМИНА " + resultPassword);
+        data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_father")).header("Content-Type", "application/json")
+                .body("{" +
+                        "\"photo\":" + table.raw().get(0).get(0) + "," +
+                        "\"first_name\":" + table.raw().get(0).get(1) + "," +
+                        "\"last_name\":" + table.raw().get(0).get(2) + "," +
+                        "\"phone_number\":" + table.raw().get(0).get(3) + "," +
+                        "\"email\":" + table.raw().get(0).get(4) + ", " +
+                        "\"password\":" + resultPassword + ", " +
+                        "\"role_id\":" + table.raw().get(0).get(6) + "}");
+    }
+
+    @When("^POST request send with correct resource$")
+    public void post_request_send_with_correct_resource() throws Throwable {
+        data.response = data.request.when().post("/admin/admin.add");
         System.out.println(data.response.prettyPrint());
         data.r = rawToString(data.response);
     }
 
-    @Then("^Status-code \"([^\"]*)\" is received$")
-    public void statuscode_something_is_received(int strArg1) throws Throwable {
-        data.json = data.response.then().assertThat().statusCode(strArg1);
+    @Then("^Status_code is 200$")
+    public void statuscode_is_200() throws Throwable {
+        data.json = data.response.then().assertThat().statusCode(200);
     }
 
     @And("^Response contains id of admin$")
@@ -38,19 +60,53 @@ public class admin_registration extends ReusableMethods {
     }
 
 
-    @Given("^Sending request with correct token and using (.+), (.+), (.+), (.+), (.+), (.+) parameters$")
-    public void sending_request_with_correct_token(String firstname, String lastname, String phonenumber, String email, int roleid, String password) throws Throwable {
-        String decryptedPass = password;
-        String encryptedPass = convert(password);
-        String result;
-        if (decryptedPass.equals("\"pass\"")) {
-            result = encryptedPass;
-        } else {
-            result = decryptedPass;
+    //admin_add with errors
+
+    @Given("^Sending admin_add request using (.+), (.+), (.+), (.+), (.+), (.+), (.+), (.+) parameters$")
+    public void sending_adminadd_request_with_correct_token_and_using_parameters(String token, String photo, String firstname, String lastname, String phonenumber, String email, String roleid, String password) throws Throwable {
+        if (token.equals("\"true\"")) {
+            resultToken = properties.getProperty("admin_father");
         }
-        System.out.println("МОЙ ПАРОЛЬ " + encryptedPass);
-        data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_one")).header("Content-Type", "application/json").body("{\"photo\":" + data.photo + ",\"first_name\":" + firstname + ",\"last_name\":" + lastname + ",\"phone_number\":" + phonenumber + ",\"email\":" + email + ", \"password\":" + result + ", \"role_id\":" + roleid + "}");
+        else {
+            resultToken = token;
+        }
+        if (password.equals("\"pass\"")) {
+            resultPassword = convert(password);
+        }
+        else {
+            resultPassword = password;
+        }
+
+        data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json")
+                .body("{" +
+                        "\"photo\":" + photo + "," +
+                        "\"first_name\":" + firstname + "," +
+                        "\"last_name\":" + lastname + "," +
+                        "\"phone_number\":" + phonenumber + "," +
+                        "\"email\":" + email + ", " +
+                        "\"password\":" + resultPassword + ", " +
+                        "\"role_id\":" + roleid + "}");
     }
+
+    @When("^POST request send to (.+)$")
+    public void request_send_to_resource_something(String strArg1) throws Throwable {
+        data.response = data.request.when().post(strArg1);
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @And("^Response contains (.+) and (.+)$")
+    public void response_contains_and(String errorkey, String errortext) throws Throwable {
+        if (StringUtils.isNumeric(errortext)) {
+            data.json = data.response.then().body(errorkey, equalTo(Integer.parseInt(errortext)));
+        } else {
+            data.json = data.response.then().body(errorkey, equalTo(errortext));
+        }
+
+    }
+
+
+    //admin_authorization
 
     @Given("^Sending request with generated API key for admin using$")
     public void sending_request_with_generated_api_key_for_admin_using_something_and_something(DataTable table) throws Throwable {
@@ -64,11 +120,19 @@ public class admin_registration extends ReusableMethods {
         data.r = rawToString(data.response);
     }
 
+    @Then("^Status-code \"([^\"]*)\" is received$")
+    public void statuscode_something_is_received(int strArg1) throws Throwable {
+        data.json = data.response.then().assertThat().statusCode(strArg1);
+    }
+
     @And("^Response contains authorization token$")
     public void response_contains_authorization_token() throws Throwable {
         data.js = rawToJson(data.json);
-        data.adminAuthToken = data.js.get("id");
+        data.adminAuthToken = data.js.get("token");
     }
+
+
+//admin_password recovery
 
     @Given("^Sending request with generated API key for admin with$")
     public void sending_request_with_generated_api_key_for_admin_with(DataTable table) throws Throwable {
@@ -98,10 +162,6 @@ public class admin_registration extends ReusableMethods {
         data.json = data.response.then().assertThat().statusCode(statuscode);
     }
 
-    @And("^Response contains (.+) and (.+)$")
-    public void response_contains_and(String errorkey, String errortext) throws Throwable {
-        data.json = data.response.then().body(errorkey, equalTo(errortext));
-    }
 
     @Given("^Sending some request with (.+) using (.+) and (.+)$")
     public void sending_request_with_using_and(String admintoken, String email, String password) throws Throwable {

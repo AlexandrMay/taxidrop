@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 
 @CucumberOptions(
-        features = {"src/test/java/features"},
+        features = {"src/test/java/Features"},
         glue = {"stepDefinations"},
         tags = {"@NeedTo"},
         format = {

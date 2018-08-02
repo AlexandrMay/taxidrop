@@ -1,4 +1,0 @@
-Feature: driver_registration
-
-
-
