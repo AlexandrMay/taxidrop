@@ -1,9 +1,10 @@
-package stepDefinations.driver_registration;
+package stepDefinations.Driver;
 
 import Properties.ReusableMethods;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
 import stepDefinations.StepData;
 
 
@@ -67,4 +68,12 @@ public class driver_registration extends ReusableMethods {
                 "]," +
                 "\"token\": " + table.raw().get(0).get(23) + "}");
     }
+
+    @When("^POST request driver/registration send to correct resource$")
+    public void post_request_driverregistration_send_to_correct_resource() throws Throwable {
+        data.response = data.request.when().post("/driver/registration");
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
 }

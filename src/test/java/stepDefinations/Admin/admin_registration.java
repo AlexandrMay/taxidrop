@@ -113,9 +113,9 @@ public class admin_registration extends ReusableMethods {
         data.request = given().header("Authorization", "Key " + passengerAdminToken()).header("Content-Type", "application/json").body("{\"email\":" + table.raw().get(0).get(0) + ",\"password\":" + convert(table.raw().get(0).get(1)) + "}");
     }
 
-    @When("^POST request send to \"([^\"]*)\"$")
-    public void post_request_send_to_something(String strArg1) throws Throwable {
-        data.response = data.request.when().post(strArg1);
+    @When("^POST request send with authorization resource$")
+    public void post_request_send_to_something() throws Throwable {
+        data.response = data.request.when().post("/admin/authorization");
         System.out.println(data.response.prettyPrint());
         data.r = rawToString(data.response);
     }
@@ -201,6 +201,20 @@ public class admin_registration extends ReusableMethods {
     @When("^PUT request send to resource (.+)$")
     public void post_request_send_to(String resource) throws Throwable {
         data.response = data.request.when().put(resource);
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+//deleting
+
+    @Given("^Sending request to delete admin$")
+    public void sending_request_to_delete_admin() throws Throwable {
+        data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_father")).header("Content-Type", "application/json");
+    }
+
+    @When("^DELETE request send$")
+    public void delete_request_send() throws Throwable {
+        data.response = data.request.when().delete("/admin/admin.delete/" + data.adminId);
         System.out.println(data.response.prettyPrint());
         data.r = rawToString(data.response);
     }

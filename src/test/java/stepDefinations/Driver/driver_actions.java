@@ -1,4 +1,4 @@
-package stepDefinations.driver_registration;
+package stepDefinations.Driver;
 
 import Properties.ReusableMethods;
 import cucumber.api.java.en.And;

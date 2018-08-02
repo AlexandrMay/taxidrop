@@ -8,7 +8,7 @@ Feature: admin_registration
     Then Status_code is 200
     And Response contains id of admin
 
-@NeedTo
+
   Scenario Outline: admin_add with errors
     Given Sending admin_add request using <token>, <photo>, <first_name>, <last_name>, <phone_number>, <email>, <role_id>, <password> parameters
     When POST request send to <resource>
@@ -33,7 +33,7 @@ Feature: admin_registration
   Scenario: admin_authorization
       Given Sending request with generated API key for admin using
       |"maysalexandr@gmail.com"|"pass"|
-      When POST request send to "/admin/authorization"
+      When POST request send with authorization resource
       Then Status-code "200" is received
       And Response contains authorization token
 
@@ -71,5 +71,12 @@ Feature: admin_registration
       |"right"    |""|/admin/password.recovery|400|error.message|Incorrect request body. Parameters: 'email' are required.|
       |"right"    |"mail@mail.com"|/admin/password.recovery|404|error.message|User with email 'mail@mail.com' not found.|
       |"right"    |"maysalexandr@gmail.com"|admin/password.recoveries|404|message|Requested resource were not found at given endpoint.|
+
+
+      Scenario: deleting admin
+        Given Sending request to delete admin
+        When DELETE request send
+        Then Status-code "200" is received
+
 
 
