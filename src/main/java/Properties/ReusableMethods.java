@@ -3,7 +3,6 @@ package Properties;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import io.restassured.specification.RequestSpecification;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.text.SimpleDateFormat;

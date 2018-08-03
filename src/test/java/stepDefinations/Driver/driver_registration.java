@@ -53,7 +53,7 @@ public class driver_registration extends ReusableMethods {
                 "\"car\": {" +
                 "\"make\": " + table.raw().get(0).get(12) + "," +
                 "\"model\": " + table.raw().get(0).get(13) + "," +
-                "\"licence_plate_number\": " + table.raw().get(0).get(14) + "," +
+                "\"license_plate_number\": " + table.raw().get(0).get(14) + "," +
                 "\"car_photo\": " + table.raw().get(0).get(15) + "," +
                 "\"proof_of_ownership\": " + table.raw().get(0).get(16) + "," +
                 "\"insurance\": " + table.raw().get(0).get(17) + "}" + "," +
@@ -66,7 +66,7 @@ public class driver_registration extends ReusableMethods {
                 "\"owner_phone_numbers\": [" +
                 "" +table.raw().get(0).get(22) + "" +
                 "]," +
-                "\"token\": " + table.raw().get(0).get(23) + "}");
+                "\"token\": " + "\"" +data.driverRegistrationToken + "\"" + "}");
     }
 
     @When("^POST request driver/registration send to correct resource$")
@@ -76,4 +76,31 @@ public class driver_registration extends ReusableMethods {
         data.r = rawToString(data.response);
     }
 
+    @Given("^Sending request with FB token to confirm drivers number$")
+    public void sending_request_with_fb_token_to_confirm_drivers_number() throws Throwable {
+        data.request = given().header("Authorization", "Key " + driverToken()).header("Content-Type", "application/json")
+                .body("{\"user_type\": " + 0 + ", \"code\": " + properties.getProperty("FB_driver_token") + "}");
+
+    }
+
+    @When("^POST request phone.confirm is sent$")
+    public void post_request_phoneconfirm_is_sent() throws Throwable {
+        data.response = data.request.when().post("/phone.confirm");
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @And("^Response contains drivers registration token$")
+    public void response_contains_drivers_reg_token() throws Throwable {
+        data.js = rawToJson(data.json);
+        data.driverRegistrationToken = data.js.get("token");
+    }
+
+    @And("^Response contains drivers authorization token$")
+    public void response_contains_drivers_authorization_token() throws Throwable {
+        data.js = rawToJson(data.json);
+        data.driverAuthorizationToken = data.js.get("token");
+    }
 }
+
+

@@ -19,7 +19,9 @@ public class StepData {
     public static int passengerId;
     public static int driverID;
     public static String driversRefferralCode;
-    public static String photo = "\"base64\"";
 
-    public static String registrationToken;
+    public static String driverRegistrationToken;
+    public static String driverAuthorizationToken;
+
+    public static String passengerRegistrationToken;
 }

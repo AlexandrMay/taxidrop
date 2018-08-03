@@ -129,6 +129,7 @@ public class admin_registration extends ReusableMethods {
     public void response_contains_authorization_token() throws Throwable {
         data.js = rawToJson(data.json);
         data.adminAuthToken = data.js.get("token");
+        System.out.println(data.adminAuthToken);
     }
 
 
@@ -147,10 +148,6 @@ public class admin_registration extends ReusableMethods {
         data.r = rawToString(data.response);
     }
 
-    @Given("^Sending request with incorrect token and parameters (.+), (.+), (.+), (.+), (.+), (.+)$")
-    public void sending_request_with_incorrect_token(String firstname, String lastname, String phonenumber, String email, int roleid, String password) throws Throwable {
-        data.request = given().header("Authorization", "Bearer 1" + properties.getProperty("admin_one")).header("Content-Type", "application/json").body("{\"photo\":" + data.photo + ",\"first_name\":" + firstname + ",\"last_name\":" + lastname + ",\"phone_number\":" + phonenumber + ",\"email\":" + email + ", \"password\":" + convert(password) + ", \"role_id\":" + roleid + "}");
-    }
 
     @And("^Response contains error$")
     public void response_contains_error(DataTable table) throws Throwable {
