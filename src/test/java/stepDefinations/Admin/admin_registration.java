@@ -141,9 +141,9 @@ public class admin_registration extends ReusableMethods {
 
     }
 
-    @When("^PUT request send to \"([^\"]*)\"$")
-    public void put_request_send_to_something(String strArg1) throws Throwable {
-        data.response = data.request.when().put(strArg1);
+    @When("^PUT request /admin/password.recovery is sent$")
+    public void put_request_send_to_something() throws Throwable {
+        data.response = data.request.when().put("/admin/password.recovery");
         System.out.println(data.response.prettyPrint());
         data.r = rawToString(data.response);
     }
@@ -193,13 +193,6 @@ public class admin_registration extends ReusableMethods {
             resultToken = admintoken;
         }
         data.request = given().header("Authorization", "Key " + resultToken).header("Content-Type", "application/json").body("{\"email\":" + email + "}");
-    }
-
-    @When("^PUT request send to resource (.+)$")
-    public void post_request_send_to(String resource) throws Throwable {
-        data.response = data.request.when().put(resource);
-        System.out.println(data.response.prettyPrint());
-        data.r = rawToString(data.response);
     }
 
 //deleting

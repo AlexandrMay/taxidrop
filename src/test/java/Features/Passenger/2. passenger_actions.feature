@@ -29,7 +29,7 @@ Scenario Outline: passenger/profile.info
     |"true"|"base64"|"First"|"Last"|"123"|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'email' are malformed or incorrect.|
     |"true"|"base64"|"First"|"Last"|"buggserazzer@hotmail.com"|/passenger/profile.edit|400|error.message|Email already exist in system.|
 
-@NeedTo
+
   Scenario Outline: /passenger/pass.change
     Given sending /passenger/pass.change request using <token>, <password>, <password_old>
     When PUT request send to <resource>
@@ -45,7 +45,7 @@ Scenario Outline: passenger/profile.info
     |"true"|"newpass"|"false"|/passenger/pass.change|400|error.message|Incorrect request body. Parameters: 'password_old' are malformed or incorrect.|
     |"true"|null|"passengerpass"|/passenger/pass.change|400|error.message|Incorrect request body. Parameters: 'password' are required.|
     |"true"|"passengerpass"|null|/passenger/pass.change|400|error.message|Incorrect request body. Parameters: 'password_old' are required.|
-    |"true"|"passengerpass"|"passengerpass"|/passenger/pass.change|400|error.message|Old and new passwords are equal|
+    |"true"|"passengerpass"|"passengerpass"|/passenger/pass.change|404|error.message|Old and new passwords are equal|
 
 
 

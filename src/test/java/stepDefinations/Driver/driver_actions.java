@@ -90,9 +90,23 @@ public class driver_actions extends ReusableMethods {
         data.request = given().header("Authorization", "Bearer " + resultToken);
     }
 
-    @When("^DELETE request send to \"([^\"]*)\"$")
-    public void delete_request_send_to_something(String strArg1) throws Throwable {
-        data.response = data.request.when().delete(strArg1);
+    @When("^DELETE request /driver/profile.delete is sent$")
+    public void delete_request_send_to_something() throws Throwable {
+        data.response = data.request.when().delete("/driver/profile.delete");
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @When("^PUT request /driver/profile.edit is sent$")
+    public void put_request_driverprofileedit_is_sent() throws Throwable {
+        data.response = data.request.when().put("/driver/profile.edit");
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @When("^PUT request /driver/pass.change is sent$")
+    public void put_request_driverpasschange_is_sent() throws Throwable {
+        data.response = data.request.when().put("/driver/pass.change");
         System.out.println(data.response.prettyPrint());
         data.r = rawToString(data.response);
     }

@@ -9,7 +9,7 @@ Feature: driver_actions
 
   Scenario Outline: profile.edit
     Given Sending profile.edit request with correct token and using <token>, <photo>, <first_name>, <last_name>, <email> parameters
-    When PUT request send to "/driver/profile.edit"
+    When PUT request /driver/profile.edit is sent
     Then Statuscode <status_code> is received
     And Response contains <key> and <value>
   Examples:
@@ -37,7 +37,7 @@ Feature: driver_actions
 
   Scenario Outline: pass.change
     Given Sending pass.change request using <token>, <password>, <password_old>
-    When PUT request send to "/driver/pass.change"
+    When PUT request /driver/pass.change is sent
     Then Statuscode <status_code> is received
     And Response contains <key> and <value>
     Examples:
@@ -55,7 +55,7 @@ Feature: driver_actions
 
 Scenario Outline: profile.delete
   Given Sending profile.delete request using <token>
-  When DELETE request send to "/driver/profile.delete"
+  When DELETE request /driver/profile.delete is sent
   Then Statuscode <status_code> is received
   And Response contains <key> and <value>
   Examples:

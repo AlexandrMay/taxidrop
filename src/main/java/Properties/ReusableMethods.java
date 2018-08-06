@@ -6,6 +6,8 @@ import io.restassured.response.ValidatableResponse;
 import org.apache.commons.codec.digest.DigestUtils;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,19 +17,31 @@ import java.util.Properties;
 
 public abstract class ReusableMethods {
 
+
+
+
     public String passengerAdminToken() {return convert1(currentDate() + properties.getProperty("admin_passenger_token"));}
 
     public String driverToken() {return convert1(currentDate() + properties.getProperty("driver_token"));}
 
     public void setProperty(String name, String value) throws IOException {
-        Properties props = new Properties();
+      //  Properties props = new Properties();
         FileOutputStream fis = new FileOutputStream("src/main/java/Properties/temp.properties");
         props.setProperty(name, value);
         props.store(fis, "comment");
     }
 
+    public String getTempProperty(String propertyName) throws IOException {
+      //  Properties temp = new Properties();
+        FileInputStream fis = new FileInputStream("src/main/java/Properties/temp.properties");
+        temp.load(fis);
+        return temp.getProperty(propertyName);
+    }
+    public static Properties props = new Properties();
 
     public static Properties properties = new Properties();
+
+    public static Properties temp = new Properties();
 
 
     public String currentDate() {

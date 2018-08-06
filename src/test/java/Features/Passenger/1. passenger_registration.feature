@@ -24,7 +24,7 @@ Feature: passenger_registration
 
   Scenario: passenger/registration
     Given Sending request with correct token and with parameters
-    |"Auto"|"Passenger"|"+380672594067"|"buggserazzer@hotmail.com"|"passengerpass"|"1"|
+    |"Auto"|"Passenger"|"+380994550009"|"buggserazzer@hotmail.com"|"passengerpass"|"1"|
     When POST request passenger/registration is sent
     Then Status-code "200" is received
     And Response contains id of passenger
@@ -37,22 +37,22 @@ Feature: passenger_registration
       And Response contains <key> and <value>
       Examples:
       |token|first_name|last_name  |phone_number   |email                     |password|invite_code|registration_token|resource|status_code|key|value|
-      |"false"|"Auto"  |"Passenger"|"+380672594067"|"buggserazzer@hotmail.com"|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|412|error.message|Incorrect request headers. Headers: 'Key' are malformed or incorrect.|
-      |"true"|""  |"Passenger"|"+380672594067"|"buggserazzer@hotmail.com"|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'first_name' are required.|
-      |"true"|"Auto"  |""|"+380672594067"|"buggserazzer@hotmail.com"|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'last_name' are required.|
+      |"false"|"Auto"  |"Passenger"|"+380994550009"|"buggserazzer@hotmail.com"|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|412|error.message|Incorrect request headers. Headers: 'Key' are malformed or incorrect.|
+      |"true"|""  |"Passenger"|"+380994550009"|"buggserazzer@hotmail.com"|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'first_name' are required.|
+      |"true"|"Auto"  |""|"+380994550009"|"buggserazzer@hotmail.com"|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'last_name' are required.|
       |"true"|"Auto"  |"Passenger"|""|"buggserazzer@hotmail.com"|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'phone_number' are required.|
-      |"true"|"Auto"  |"Passenger"|"+380672594067"|""|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'email' are required.|
-      |"true"|"Auto"  |"Passenger"|"+380672594067"|"buggserazzer@hotmail.com"|"123"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'password' are malformed or incorrect.|
-      |"true"|"Auto"  |"Passenger"|"+380672594067"|"buggserazzer@hotmail.com"|""|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'password' are required.|
-      |"true"|"Auto"  |"Passenger"|"+380672594067"|"buggserazzer@hotmail.com"|"passengerpass"|"123456789123456789123"|"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'invite_code' are malformed or incorrect.|
-      |"true"|"Auto"  |"Passenger"|"+380672594067"|"buggserazzer@hotmail.com"|"passengerpass"|""|"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Registration token is incorrect.|
-      |"true"|"Auto"  |"Passenger"|"+380672594067"|"buggserazzer@hotmail.com"|"passengerpass"|""|""|/passenger/registration|400|error.message|Registration token is incorrect.|
+      |"true"|"Auto"  |"Passenger"|"+380994550009"|""|"passengerpass"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'email' are required.|
+      |"true"|"Auto"  |"Passenger"|"+380994550009"|"buggserazzer@hotmail.com"|"123"|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'password' are malformed or incorrect.|
+      |"true"|"Auto"  |"Passenger"|"+380994550009"|"buggserazzer@hotmail.com"|""|""  |"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'password' are required.|
+      |"true"|"Auto"  |"Passenger"|"+380994550009"|"buggserazzer@hotmail.com"|"passengerpass"|"123456789123456789123"|"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Incorrect request body. Parameters: 'invite_code' are malformed or incorrect.|
+      |"true"|"Auto"  |"Passenger"|"+380994550009"|"buggserazzer@hotmail.com"|"passengerpass"|""|"L5F4i7dryng8Bc!Gf6JV"|/passenger/registration|400|error.message|Registration token is incorrect.|
+      |"true"|"Auto"  |"Passenger"|"+380994550009"|"buggserazzer@hotmail.com"|"passengerpass"|""|""|/passenger/registration|400|error.message|Registration token is incorrect.|
 
 
 
     Scenario: passenger/authorization
       Given sending passenger/authorization request using
-      |1|"+380672594067"|"passengerpass"|
+      |1|"+380994550009"|"passengerpass"|
       When POST request passenger/authorization is sent
       Then Status-code "200" is received
       And Response contains passengers authorization token
