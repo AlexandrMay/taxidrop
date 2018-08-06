@@ -12,6 +12,9 @@ import static io.restassured.RestAssured.given;
 
 public class driver_registration extends ReusableMethods {
 
+    private String resultPass;
+    private String resultToken;
+
     private StepData data;
 
     public driver_registration(StepData data) {
@@ -27,14 +30,12 @@ public class driver_registration extends ReusableMethods {
 
     @Given("^Sending request to register driver with correct token and with parameters$")
     public void sending_request_to_register_driver_with_correct_token_and_with_parameters(DataTable table) throws Throwable {
-        String pass = table.raw().get(0).get(4);
-        String result;
-        if (pass.equals("\"driverpass\"")) {
-            result = convert(pass);
+        if (table.raw().get(0).get(4).equals("\"driverpass\"")) {
+            resultPass = convert(table.raw().get(0).get(4));
         }else {
-            result = pass;
+            resultPass = table.raw().get(0).get(4);
         }
-        System.out.println("Водительский пароль: " + result);
+        System.out.println("Водительский пароль: " + resultPass);
 
         data.request = given().header("Authorization", "Key " + driverToken()).header("Content-Type", "application/json")
                 .body("{" +
@@ -42,7 +43,7 @@ public class driver_registration extends ReusableMethods {
                 "\"last_name\": " + table.raw().get(0).get(1) + "," +
                 "\"email\": " + table.raw().get(0).get(2) + "," +
                 "\"phone_number\": " + table.raw().get(0).get(3) + "," +
-                "\"password\": " + result + "," +
+                "\"password\": " + resultPass + "," +
                 "\"invite_code\": " + table.raw().get(0).get(5) + "," +
                 "\"driving_license\": " + table.raw().get(0).get(6) + "," +
                 "\"passport\": " + table.raw().get(0).get(7) + "," +
@@ -67,6 +68,8 @@ public class driver_registration extends ReusableMethods {
                 "" +table.raw().get(0).get(22) + "" +
                 "]," +
                 "\"token\": " + "\"" +data.driverRegistrationToken + "\"" + "}");
+
+        System.out.println("РЕГ ТОКЕН: " + data.driverRegistrationToken);
     }
 
     @When("^POST request driver/registration send to correct resource$")
@@ -101,6 +104,39 @@ public class driver_registration extends ReusableMethods {
         data.js = rawToJson(data.json);
         data.driverAuthorizationToken = data.js.get("token");
     }
+
+    //errors
+
+    @Given("^Given sending driver/registration request using (.+), (.+), (.+), (.+), (.+), (.+), (.+)$")
+    public void given_sending_driverregistration_request_using_(String token, String firstname, String lastname, String email, String phonenumber, String password, String registrationtoken) throws Throwable {
+        if (password.equals("\"driverpass\"")) {
+            resultPass = convert(password);
+        }else {
+            resultPass = password;
+        }
+        if (token.equals("\"true\"")) {
+            resultToken = driverToken();
+        }else {
+            resultToken = token;
+        }
+
+        data.request = given().header("Authorization", "Key " + resultToken).header("Content-Type", "application/json")
+                .body("{" +
+                        "\"first_name\": " + firstname + "," +
+                        "\"last_name\": " + lastname + "," +
+                        "\"email\": " + email + "," +
+                        "\"phone_number\": " + phonenumber + "," +
+                        "\"password\": " + resultPass + "," +
+                        "\"invite_code\": \"\" ," +
+                        "\"driving_license\": \"base64\"," +
+                        "\"passport\": \"base64\"," +
+                        "\"photo\": \"base64\"," +
+                        "\"license_number\": \"JT642S\"," +
+                        "\"license_issue_date\": \"2010-01-01\"," +
+                        "\"license_expire_date\": \"2030-01-01\"," +
+                        "\"token\": " + registrationtoken + "}");
+    }
+
 }
 
 

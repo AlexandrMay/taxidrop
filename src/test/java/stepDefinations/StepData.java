@@ -1,7 +1,5 @@
 package stepDefinations;
 
-
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
@@ -24,4 +22,5 @@ public class StepData {
     public static String driverAuthorizationToken;
 
     public static String passengerRegistrationToken;
+
 }

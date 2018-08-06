@@ -5,6 +5,9 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import org.apache.commons.codec.digest.DigestUtils;
 
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -15,6 +18,14 @@ public abstract class ReusableMethods {
     public String passengerAdminToken() {return convert1(currentDate() + properties.getProperty("admin_passenger_token"));}
 
     public String driverToken() {return convert1(currentDate() + properties.getProperty("driver_token"));}
+
+    public void setProperty(String name, String value) throws IOException {
+        Properties props = new Properties();
+        FileOutputStream fis = new FileOutputStream("src/main/java/Properties/temp.properties");
+        props.setProperty(name, value);
+        props.store(fis, "comment");
+    }
+
 
     public static Properties properties = new Properties();
 
