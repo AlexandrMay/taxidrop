@@ -9,7 +9,7 @@ public class SQL extends ReusableMethods {
 
 
 
-    private static final String URL = "jdbc:https://phpmyadmin.kross.taxi";
+    private static final String URL = "jdbc:mysql://35.195.57.59";
     private static final String USER = "root";
     private static final String PASSWORD = "OqLfv41B3wyAbwK";
 
@@ -18,7 +18,7 @@ public class SQL extends ReusableMethods {
     private static ResultSet rs;
 
     public void passengersCount() throws ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = null;
 
         int count;
