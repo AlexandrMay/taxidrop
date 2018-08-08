@@ -1,4 +1,4 @@
-package stepDefinations.Passenger;
+package stepDefinations.Actions;
 
 import Properties.ReusableMethods;
 import cucumber.api.java.en.Given;
@@ -41,7 +41,7 @@ public class passenger_actions extends ReusableMethods {
         } else {
             resultToken = token;
         }
-        data.request = given().header("Authorization", "Key " + resultToken).header("Content-Type", "application/json").
+        data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json").
                 body("{\"photo\":" + photo + ", " +
                       "\"first_name\":" + firstname + ", " +
                        "\"last_name\":" + lastname + "," +

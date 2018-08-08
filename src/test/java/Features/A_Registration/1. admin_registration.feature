@@ -73,10 +73,7 @@ Feature: admin_registration
       |"right"    |"a.may@woxapp.com"|admin/password.recoveries|404|message|Requested resource were not found at given endpoint.|
 
 
-      Scenario: deleting admin
-        Given Sending request to delete admin
-        When DELETE request send
-        Then Status-code "200" is received
+
 
 
 

@@ -1,4 +1,4 @@
-package stepDefinations.Driver;
+package stepDefinations.Registration;
 
 import Properties.ReusableMethods;
 import cucumber.api.DataTable;

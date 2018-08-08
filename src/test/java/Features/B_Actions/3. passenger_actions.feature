@@ -21,13 +21,13 @@ Scenario Outline: passenger/profile.info
     And Response contains <key> and <value>
     Examples:
     |token|photo|first_name|last_name|email|resource|status_code|key|value|
-    |false|"base64"|"First"|"Last"|"buggserazzer@hotmail.com"|/passenger/profile.edit|401|error.message|Authentication key: 'false' is incorrect.|
-    |"true"|""|"First"|"Last"|"buggserazzer@hotmail.com"|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'photo' are required.|
-    |"true"|"base64"|""|"Last"|"buggserazzer@hotmail.com"|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'first_name' are required.|
-    |"true"|"base64"|"First"|""|"buggserazzer@hotmail.com"|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'last_name' are required.|
+    |false|"base64"|"First"|"Last"|"test@test.com"|/passenger/profile.edit|401|error.message|Authentication key: 'false' is incorrect.|
+    |"true"|""|"First"|"Last"|"test@test.com"|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'photo' are required.|
+    |"true"|"base64"|""|"Last"|"test@test.com"|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'first_name' are required.|
+    |"true"|"base64"|"First"|""|"test@test.com"|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'last_name' are required.|
     |"true"|"base64"|"First"|"Last"|""|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'email' are required.|
     |"true"|"base64"|"First"|"Last"|"123"|/passenger/profile.edit|400|error.message|Incorrect request body. Parameters: 'email' are malformed or incorrect.|
-    |"true"|"base64"|"First"|"Last"|"buggserazzer@hotmail.com"|/passenger/profile.edit|400|error.message|Email already exist in system.|
+    |"true"|"base64"|"First"|"Last"|"test@test.com"|/passenger/profile.edit|400|error.message|Update data error: 'Email already used.'|
 
 
   Scenario Outline: /passenger/pass.change
@@ -45,7 +45,7 @@ Scenario Outline: passenger/profile.info
     |"true"|"newpass"|"false"|/passenger/pass.change|400|error.message|Incorrect request body. Parameters: 'password_old' are malformed or incorrect.|
     |"true"|null|"passengerpass"|/passenger/pass.change|400|error.message|Incorrect request body. Parameters: 'password' are required.|
     |"true"|"passengerpass"|null|/passenger/pass.change|400|error.message|Incorrect request body. Parameters: 'password_old' are required.|
-    |"true"|"passengerpass"|"passengerpass"|/passenger/pass.change|404|error.message|Old and new passwords are equal|
+    |"true"|"passengerpass"|"passengerpass"|/passenger/pass.change|404|error.code|77|
 
 
 
