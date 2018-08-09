@@ -4,10 +4,32 @@ import sun.applet.Main;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class test extends ReusableMethods {
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
         SQL sql = new SQL();
-        sql.getData();
+        sql.getIntData("SELECT * FROM roles WHERE name = 'test_role'", "id");
+
+
+
+
+//
+//        Redis redis = new Redis();
+//
+//        List<String> list = redis.jedis.lrange("AccessToken", 0 ,5);
+//
+//        for(int i = 0; i<list.size(); i++) {
+//            System.out.println("Stored string in redis:: "+list.get(i));
+//        }
+
+        // sql.getData();
+
+       // props.setProperty("some1", "property1");
+        //props.setProperty("some2", "property2");
+
+       // setSomeProperty();
+
+
     }
 }

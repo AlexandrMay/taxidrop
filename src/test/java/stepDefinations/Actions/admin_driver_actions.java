@@ -1,11 +1,13 @@
 package stepDefinations.Actions;
 
 import Properties.ReusableMethods;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import stepDefinations.StepData;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class admin_driver_actions extends ReusableMethods {
 
@@ -16,6 +18,26 @@ public class admin_driver_actions extends ReusableMethods {
     }
 
     private String resultToken;
+
+    @Given("^sending /admin/drivers.list$")
+    public void sending_admindriverslist() throws Throwable {
+        data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_father")).header("Content-Type", "application/json");
+    }
+
+    @When("^GET request drivers.list is sent$")
+    public void get_request_driverslist_is_sent() throws Throwable {
+        data.response = data.request.when().get("/admin/drivers.list?amount=10");
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @And("^count of drivers equals to DB$")
+    public void count_of_drivers_equals_to_db() throws Throwable {
+        data.json = data.response.then().body("\"total\"", equalTo(data.drivers()));
+    }
+
+
+
 
 
     @Given("^sending /admin/drivers.list using (.+)$")
@@ -104,5 +126,24 @@ public class admin_driver_actions extends ReusableMethods {
 
         data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json");
     }
+
+
+    @Given("^sending /admin/driver.applications$")
+    public void sending_admindriverapplications() throws Throwable {
+        data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_father")).header("Content-Type", "application/json");
+    }
+
+    @When("^GET request /admin/driver.applications is sent$")
+    public void get_request_admindriverapplications_is_sent() throws Throwable {
+        data.response = data.request.when().get("/admin/driver.applications?amount=10");
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @And("^count of applications equals to DB$")
+    public void count_of_applications_equals_to_db() throws Throwable {
+        data.json = data.response.then().body("\"total\"", equalTo(data.driverApplications()));
+    }
+
 
 }

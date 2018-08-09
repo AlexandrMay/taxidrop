@@ -26,8 +26,9 @@ public class SQL extends ReusableMethods {
         return dbConnection;
     }
 
-    public static void getData() throws SQLException {
-        String selectTableSQL = "SELECT COUNT(*) FROM users";
+    public static int getCountData(String request) throws SQLException {
+        int count = 0;
+        String selectTableSQL = request;
         Connection dbConnection = null;
         Statement statement = null;
 
@@ -40,55 +41,48 @@ public class SQL extends ReusableMethods {
 
             // И если что то было получено то цикл while сработает
             while (rs.next()) {
-                int count= rs.getInt(1);
+                count = rs.getInt(1);
 
-                System.out.println("count : " + count);
+                //  System.out.println("count : " + count);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
 
-    } finally {
-        if (statement != null) {
-            statement.close();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
         }
-        if (dbConnection != null) {
-            dbConnection.close();
+        return count;
+    }
+    public static int getIntData(String request, String columnName) throws SQLException {
+        int count = 0;
+        String selectTableSQL = request;
+        Connection dbConnection = null;
+        Statement statement = null;
+
+        try {
+            dbConnection = getDBConnection();
+            statement = dbConnection.createStatement();
+            ResultSet rs = statement.executeQuery(selectTableSQL);
+            while (rs.next()) {
+                count = rs.getInt(columnName);
+                System.out.println(count);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
         }
+        return count;
     }
-    }
-
-
-
-
-
-
-//    private static Statement stmt;
-//    private static ResultSet rs;
-//
-//    public void passengersCount() throws ClassNotFoundException {
-//        Class.forName("com.mysql.cj.jdbc.Driver");
-//        Connection con;
-//
-//        int count;
-//        try {
-//        String query = "SELECT COUNT(*) FROM `users`";
-//        con = DriverManager.getConnection("jdbc:mysql://35.233.96.167/taxi_dev","root", "OqLfv41B3wyAbwK");
-//        stmt = con.createStatement();
-//        rs = stmt.executeQuery(query);
-//        while (rs.next()) {
-//            count = rs.getInt(1);
-//            System.out.println("Total number of users in the table : " + count);
-//    }
-//        } catch (SQLException sqlEx) {
-//            sqlEx.printStackTrace();
-//        } finally {
-//            //close connection ,stmt and resultset here
-//           // try { con.close(); } catch(SQLException se) { /*can't do anything */ }
-//            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
-//            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
-//        }
-//    }
-
-
-
 }

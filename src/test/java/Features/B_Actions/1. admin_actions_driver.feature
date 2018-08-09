@@ -1,13 +1,19 @@
 Feature: admin_actions
 
-Scenario Outline:
+  Scenario: /admin/drivers.list with DB
+    Given sending /admin/drivers.list
+    When GET request drivers.list is sent
+    Then Status_code is 200
+    And count of drivers equals to DB
+
+
+Scenario Outline: /admin/drivers.list
   Given sending /admin/drivers.list using <token>
   When GET request send to <resource>
   Then Statuscode <status_code> is received
   And Response contains <key> and <value>
   Examples:
   |token|resource|status_code|key|value|
-  |"true"|/admin/drivers.list?amount=10|200|"total"|2|
   |"true"|/admin/drivers.list?amount=0 |400|error.message|Incorrect request body. Parameters: 'amount' are malformed or incorrect.|
   |false |/admin/drivers.list?amount=10|401|error.message|Authentication key: 'false' is incorrect.|
 
@@ -79,6 +85,13 @@ Scenario Outline:
       |false|/admin/driver.activate/1|401 |error.message|Authentication key: 'false' is incorrect.|
 
 
+  Scenario: /admin/driver.applications with DB
+    Given sending /admin/driver.applications
+    When GET request /admin/driver.applications is sent
+    Then Status_code is 200
+    And count of applications equals to DB
+
+
   Scenario Outline: /admin/driver.applications
     Given sending /admin/driver.applications using <token>
     When GET request send to <resource>
@@ -86,7 +99,6 @@ Scenario Outline:
     And Response contains <key> and <value>
     Examples:
     |token|resource|status_code|key|value|
-    |"true"|/admin/driver.applications?amount=10|200|"total"|0|
     |"true"|/admin/driver.applications?amount=0|400|error.message|Incorrect request body. Parameters: 'amount' are malformed or incorrect.|
     |false|/admin/driver.applications?amount=10|401 |error.message|Authentication key: 'false' is incorrect.|
 
