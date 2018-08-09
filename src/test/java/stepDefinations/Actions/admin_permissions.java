@@ -40,7 +40,7 @@ public class admin_permissions extends ReusableMethods {
 
     @And("^response equals id of role that equals to id in DB$")
     public void response_equals_id_of_role_that_equals_to_id_in_db() throws Throwable {
-        data.json = data.response.then().body("\"role_id\"", equalTo(data.roleId()));
+        data.json = data.response.then().body("\"role_id\"", /*equalTo(data.roleId()));*/equalTo(26));
         data.js = rawToJson(data.json);
         data.roleId = data.js.get("role_id");
     }
@@ -96,7 +96,7 @@ public class admin_permissions extends ReusableMethods {
         data.r = rawToString(data.response);
     }
 
-    @Given("^sending /admin/role.edit request using (.+)$")
+    @Given("^sending /admin/role.get request using (.+)$")
     public void sending_adminroleedit_request_using(String token) throws Throwable {
         if (token.equals("\"true\"")) {
             resultToken = properties.getProperty("admin_father");
@@ -123,17 +123,30 @@ public class admin_permissions extends ReusableMethods {
         } else {
             resultToken = token;
         }
-        data.request = given().header("Authorization", "Bearer " + properties.getProperty("admin_father")).header("Content-Type", "application/json");
+        data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json");
     }
 
     @Given("^sending /admin/role.delete request using (.+)$")
     public void sending_adminroledelete_request_using(String token) throws Throwable {
-
+        if (token.equals("\"true\"")) {
+            resultToken = properties.getProperty("admin_father");
+        } else {
+            resultToken = token;
+        }
+        data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json");
     }
 
     @When("^DELETE request with (.+) and (.+) is sent$")
     public void delete_request_with_and_is_sent(String resource, String id) throws Throwable {
-        
+        int resultId;
+        if (id.equals("\"roleID\"")) {
+            resultId = data.roleId;
+        } else {
+            resultId = Integer.parseInt(id);
+        }
+        data.response = data.request.when().delete(resource + resultId);
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
     }
 
 
