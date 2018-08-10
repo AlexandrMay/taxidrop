@@ -135,9 +135,9 @@ public class passenger_registration extends ReusableMethods {
     public void response_contains_passengers_authorization_token() throws Throwable {
         data.js = rawToJson(data.json);
         String token = data.js.get("token");
-        System.out.println("AUTH TOKEN: " + token);
+        System.out.println("AUTH PASSENGERS TOKEN: " + token);
         props.setProperty("passengerAuthorizationToken", token);
-        setSomePropertyToFile();
+        setSomePropertyToFile("src/main/java/Properties/passengerAuthorizationToken.properties");
     }
 
 }

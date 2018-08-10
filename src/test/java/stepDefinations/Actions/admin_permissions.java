@@ -40,9 +40,10 @@ public class admin_permissions extends ReusableMethods {
 
     @And("^response equals id of role that equals to id in DB$")
     public void response_equals_id_of_role_that_equals_to_id_in_db() throws Throwable {
-        data.json = data.response.then().body("\"role_id\"", /*equalTo(data.roleId()));*/equalTo(26));
+        data.json = data.response.then().body("\"role_id\"", equalTo(data.roleId()));//equalTo(26));
         data.js = rawToJson(data.json);
         data.roleId = data.js.get("role_id");
+        System.out.println("ROLE: " + data.roleId);
     }
 
     @Given("^sending /admin/role.add request using (.+), (.+), (.+), (.+)$")
@@ -148,8 +149,6 @@ public class admin_permissions extends ReusableMethods {
         System.out.println(data.response.prettyPrint());
         data.r = rawToString(data.response);
     }
-
-
 
 
 

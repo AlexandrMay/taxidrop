@@ -128,8 +128,10 @@ public class admin_registration extends ReusableMethods {
     @And("^Response contains authorization token$")
     public void response_contains_authorization_token() throws Throwable {
         data.js = rawToJson(data.json);
-        data.adminAuthToken = data.js.get("token");
-        System.out.println(data.adminAuthToken);
+        String token = data.js.get("token");
+        System.out.println("AUTH ADMINS TOKEN: " + token);
+        props.setProperty("adminAuthorizationToken", token);
+        setSomePropertyToFile("src/main/java/Properties/adminAuthorizationToken.properties");
     }
 
 

@@ -99,12 +99,6 @@ public class driver_registration extends ReusableMethods {
         data.driverRegistrationToken = data.js.get("token");
     }
 
-    @And("^Response contains drivers authorization token$")
-    public void response_contains_drivers_authorization_token() throws Throwable {
-        data.js = rawToJson(data.json);
-        data.driverAuthorizationToken = data.js.get("token");
-    }
-
     //errors
 
     @Given("^Given sending driver/registration request using (.+), (.+), (.+), (.+), (.+), (.+), (.+)$")
@@ -136,6 +130,40 @@ public class driver_registration extends ReusableMethods {
                         "\"license_expire_date\": \"2030-01-01\"," +
                         "\"token\": " + registrationtoken + "}");
     }
+
+    //authorize driver
+
+    @Given("^sending driver/authorization request using$")
+    public void sending_driverauthorization_request_using(DataTable table) throws Throwable {
+        if (table.raw().get(0).get(2).equals("\"driverpass\"")) {
+            resultPass = convert(table.raw().get(0).get(2));
+        }else {
+            resultPass = table.raw().get(0).get(2);
+        }
+
+        data.request = given().header("Authorization", "Key " + driverToken()).header("Content-Type", "application/json").
+                body("{\"user_type\":" + table.raw().get(0).get(0) + ", " +
+                        "\"phone_number\":" + table.raw().get(0).get(1) + ", " +
+                        "\"password\":" + resultPass + "}");
+    }
+
+    @When("^POST request driver/authorization is sent$")
+    public void post_request_driverauthorization_is_sent() throws Throwable {
+        data.response = data.request.when().post("/authorization");
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @And("^Response contains drivers authorization token$")
+    public void response_contains_drivers_authorization_token() throws Throwable {
+        data.js = rawToJson(data.json);
+        String token = data.js.get("token");
+        System.out.println("AUTH DRIVERS TOKEN: " + token);
+        props.setProperty("driverAuthorizationToken", token);
+        setSomePropertyToFile("src/main/java/Properties/driverAuthorizationToken.properties");
+    }
+
+
 
 }
 

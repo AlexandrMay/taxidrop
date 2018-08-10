@@ -1,1 +1,0 @@
-Feature: features_deleting

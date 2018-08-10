@@ -21,16 +21,17 @@ public abstract class ReusableMethods {
 
     public String driverToken() {return convert1(currentDate() + properties.getProperty("driver_token"));}
 
-    public static void setSomePropertyToFile() throws IOException {
-        FileOutputStream fis = new FileOutputStream("src/main/java/Properties/temp.properties");
+    public static void setSomePropertyToFile(String path) throws IOException {
+        FileOutputStream fis = new FileOutputStream(path);
         props.store(fis, "comment");
     }
 
-    public String getTempProperty(String propertyName) throws IOException {
-        FileInputStream fis = new FileInputStream("src/main/java/Properties/temp.properties");
+    public String getTempProperty(String propertyName, String filepath) throws IOException {
+        FileInputStream fis = new FileInputStream(filepath);
         temp.load(fis);
         return temp.getProperty(propertyName);
     }
+
     public static Properties props = new Properties();
 
     public static Properties properties = new Properties();
@@ -71,7 +72,5 @@ public abstract class ReusableMethods {
         String resp = response.asString();
         return resp;
     }
-
-
 
 }

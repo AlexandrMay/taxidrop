@@ -35,7 +35,7 @@ Scenario Outline: /admin/passengers.list
     Examples:
       |token|resource|first_name|last_name|email|status_code|key|value|
       |"true"|/admin/passenger.edit/2|"some"|"passenger"|"test@test.com"|200|"success"|200|
-      |"true"|/admin/passenger.edit/26|"some"|"passenger"|"test@test.com"|409|error.message|Email already used.|
+      |"true"|/admin/passenger.edit/27|"some"|"passenger"|"test@test.com"|409|error.message|Email already used.|
       |false|/admin/passenger.edit/2|"some"|"passenger"|"test@test.com"|401|error.message|Authentication key: 'false' is incorrect.|
       |"true"|/admin/passenger.edit/0|"some"|"passenger"|"test@test.com"|404|error.message|User with ID. '0' not found in system.|
       |"true"|/admin/passenger.edit|"some"|"passenger"|"test@test.com"|404|"message"|Requested resource were not found at given endpoint.|
