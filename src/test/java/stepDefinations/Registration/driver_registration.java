@@ -160,7 +160,7 @@ public class driver_registration extends ReusableMethods {
         String token = data.js.get("token");
         System.out.println("AUTH DRIVERS TOKEN: " + token);
         props.setProperty("driverAuthorizationToken", token);
-        setSomePropertyToFile("src/main/java/Properties/driverAuthorizationToken.properties");
+        setSomePropertyToFile("src/main/java/Properties/token.properties");
     }
 
 

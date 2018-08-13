@@ -24,7 +24,7 @@ public class passenger_actions extends ReusableMethods {
     @Given("^sending passenger/profile.info request using (.+)$")
     public void sending_passengerprofileinfo_request_using(String token) throws Throwable {
         if (token.equals("\"true\"")){
-        resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/passengerAuthorizationToken.properties");
+        resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");
         } else if (token.equals("\"father\"")) {
             resultToken = properties.getProperty("admin_father");
         } else {
@@ -37,7 +37,7 @@ public class passenger_actions extends ReusableMethods {
     @Given("^sending passenger/profile.edit request using (.+), (.+), (.+), (.+), (.+)$")
     public void sending_passengerprofileedit_request_using_(String token, String photo, String firstname, String lastname, String email) throws Throwable {
         if (token.equals("\"true\"")){
-            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/passengerAuthorizationToken.properties");
+            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");
         } else {
             resultToken = token;
         }
@@ -58,7 +58,7 @@ public class passenger_actions extends ReusableMethods {
     @Given("^sending /passenger/pass.change request using (.+), (.+), (.+)$")
     public void sending_passengerpasschange_request_using_(String token, String password, String passwordold) throws Throwable {
         if (token.equals("\"true\"")){
-            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/passengerAuthorizationToken.properties");
+            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");
         } else {
             resultToken = token;
         }

@@ -22,7 +22,7 @@ public class passenger_car_actions extends ReusableMethods {
 
     @Given("^sending /passenger/car.add request$")
     public void sending_passengercaradd_request(DataTable table) throws Throwable {
-        data.request = given().header("Authorization", "Bearer " + getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/passengerAuthorizationToken.properties")).header("Content-Type", "application/json").
+        data.request = given().header("Authorization", "Bearer " + getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties")).header("Content-Type", "application/json").
                 body("{\"make\":" + table.raw().get(0).get(0) + "," +
                       "\"model\":" + table.raw().get(0).get(1) + "," +
                       "\"license_plate_number\":" + table.raw().get(0).get(2) + "," +
@@ -41,7 +41,7 @@ public class passenger_car_actions extends ReusableMethods {
     @Given("^sending /passenger/car.add request using (.+), (.+), (.+), (.+), (.+), (.+), (.+)$")
     public void sending_passengercaradd_request_using_(String token, String make, String model, String licenseplatenumber, String carphoto, String proofofownership, String insurance) throws Throwable {
         if (token.equals("\"true\"")){
-            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/passengerAuthorizationToken.properties");
+            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");
         } else {
             resultToken = token;
         }
@@ -58,7 +58,7 @@ public class passenger_car_actions extends ReusableMethods {
     @Given("^sending /passenger/cars.list request using (.+)$")
     public void sending_passengercarslist_request_using(String token) throws Throwable {
         if (token.equals("\"true\"")){
-            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/passengerAuthorizationToken.properties");
+            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");
         } else {
             resultToken = token;
         }
@@ -69,7 +69,7 @@ public class passenger_car_actions extends ReusableMethods {
     @Given("^sending /passenger/car.delete request using (.+)$")
     public void sending_passengercardelete_request_using_(String token) throws Throwable {
         if (token.equals("\"true\"")){
-            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/passengerAuthorizationToken.properties");
+            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");
         } else {
             resultToken = token;
         }

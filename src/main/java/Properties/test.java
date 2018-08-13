@@ -8,8 +8,11 @@ import java.util.List;
 
 public class test extends ReusableMethods {
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
-        SQL sql = new SQL();
-        sql.getIntData("SELECT * FROM roles WHERE name = 'test_role'", "id");
+      //  SQL sql = new SQL();
+    ///    sql.getIntData("SELECT * FROM roles WHERE name = 'test_role'", "id");
+
+        Redis redis = new Redis();
+        redis.getInfo();
 
 
 
@@ -23,12 +26,6 @@ public class test extends ReusableMethods {
 //            System.out.println("Stored string in redis:: "+list.get(i));
 //        }
 
-        // sql.getData();
-
-       // props.setProperty("some1", "property1");
-        //props.setProperty("some2", "property2");
-
-       // setSomeProperty();
 
 
     }

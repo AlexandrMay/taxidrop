@@ -23,7 +23,7 @@ public class driver_car_actions extends ReusableMethods {
 
     @Given("^sending /driver/car.add request$")
     public void sending_passengercaradd_request(DataTable table) throws Throwable {
-        data.request = given().header("Authorization", "Bearer " + getTempProperty("driverAuthorizationToken", "src/main/java/Properties/driverAuthorizationToken.properties")).header("Content-Type", "application/json").
+        data.request = given().header("Authorization", "Bearer " + getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties")).header("Content-Type", "application/json").
                 body("{\"make\":" + table.raw().get(0).get(0) + "," +
                         "\"model\":" + table.raw().get(0).get(1) + "," +
                         "\"license_plate_number\":" + table.raw().get(0).get(2) + "," +
@@ -42,7 +42,7 @@ public class driver_car_actions extends ReusableMethods {
     @Given("^sending /driver/car.add request using (.+), (.+), (.+), (.+), (.+), (.+), (.+)$")
     public void sending_drivercaradd_request_using_(String token, String make, String model, String licenseplatenumber, String carphoto, String proofofownership, String insurance) throws Throwable {
         if (token.equals("\"true\"")){
-            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/driverAuthorizationToken.properties");
+            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties");
         } else {
             resultToken = token;
         }
@@ -59,7 +59,7 @@ public class driver_car_actions extends ReusableMethods {
     @Given("^sending /driver/cars.list request using (.+)$")
     public void sending_drivercarslist_request_using(String token) throws Throwable {
         if (token.equals("\"true\"")){
-            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/driverAuthorizationToken.properties");
+            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties");
         } else {
             resultToken = token;
         }
@@ -70,7 +70,7 @@ public class driver_car_actions extends ReusableMethods {
     @Given("^sending /driver/car.delete request using (.+)$")
     public void sending_drivercardelete_request_using(String token) throws Throwable {
         if (token.equals("\"true\"")){
-            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/driverAuthorizationToken.properties");
+            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties");
         } else {
             resultToken = token;
         }

@@ -131,7 +131,7 @@ public class admin_registration extends ReusableMethods {
         String token = data.js.get("token");
         System.out.println("AUTH ADMINS TOKEN: " + token);
         props.setProperty("adminAuthorizationToken", token);
-        setSomePropertyToFile("src/main/java/Properties/adminAuthorizationToken.properties");
+        setSomePropertyToFile("src/main/java/Properties/token.properties");
     }
 
 

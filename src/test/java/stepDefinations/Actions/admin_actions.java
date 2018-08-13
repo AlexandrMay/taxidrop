@@ -83,9 +83,24 @@ public class admin_actions extends ReusableMethods {
         data.r = rawToString(data.response);
     }
 
+    @Given("^sending different requests using admin_token$")
+    public void sending_different_requests_using_admintoken() throws Throwable {
+        data.request = given().header("Authorization", "Bearer " + getTempProperty("adminAuthorizationToken", "src/main/java/Properties/token.properties")).header("Content-Type", "application/json");
+    }
 
-
-
-
+    @And("^Response of all requests contains (.+) and (.+)$")
+    public void response_of_all_requests_contains_and(String key, String value) throws Throwable {
+        String resultValue;
+        if (value.equals("\"fromDB\"")) {
+            resultValue = String.valueOf(data.passengers());
+        } else {
+            resultValue = value;
+        }
+        if (StringUtils.isNumeric(resultValue)) {
+            data.json = data.response.then().body(key, equalTo(Integer.parseInt(resultValue)));
+        } else {
+            data.json = data.response.then().body(key, equalTo(resultValue));
+        }
+    }
 
 }

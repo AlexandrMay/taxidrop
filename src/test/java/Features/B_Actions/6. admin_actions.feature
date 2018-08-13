@@ -10,7 +10,7 @@ Feature: admin_actions
     |"true"|/admin/admins.list?amount=10|200|"total"|"fromDB"|
     |"true"|/admin/admins.list?amount=0|400|error.message|Incorrect request body. Parameters: 'amount' are malformed or incorrect.|
     |false|/admin/admins.list?amount=10|401|error.message|Authentication key: 'false' is incorrect.|
-
+  @NeedTo
   Scenario Outline: /admin/admin.edit
     Given sending /admin/admin.edit request with <token>, <photo>, <first_name>, <last_name>, <phone_number>, <email>, <role_id>
     When PUT /admin/admin.edit request with <resource> and <id> is sent
@@ -30,6 +30,30 @@ Feature: admin_actions
     |"true"|"base64"|"Auto"|"Bot"|"+380664853399"|""|"roleID"|/admin/admin.edit/|"true"|400|error.message|Incorrect request body. Parameters: 'email' are required.|
     |"true"|"base64"|"Auto"|"Bot"|"+380664853399"|"a.may@woxapp.com"|0|/admin/admin.edit/|"true"|404|error.message|Role with ID '0' does not exist.|
     |"true"|"base64"|"Auto"|"Bot"|"+380664853399"|"a.may@woxapp.com"|""|/admin/admin.edit/|"true"|400|error.message|Incorrect request body. Parameters: 'role_id' are required.|
+
+@NeedTo
+    Scenario Outline: checking permissions for admin
+      Given sending different requests using admin_token
+      When GET request send to <resource>
+      Then Statuscode <status_code> is received
+      And Response of all requests contains <key> and <value>
+      Examples:
+      |resource|status_code|key|value|
+      |/admin/owner.applications?amount=10|403|error.message|You don't have access to this part.|
+      |/admin/faq.list?type=0|403|error.message|You don't have access to this part.|
+      |/admin/admins.list?amount=10|403|error.message|You don't have access to this part.|
+      |/admin/roles.list?amount=10 |403|error.message|You don't have access to this part.|
+      |/admin/orders.unconfirmed?amount=10|403|error.message|You don't have access to this part.|
+      |/admin/passenger/payment.list?amount=10|403|error.message|You don't have access to this part.|
+      |/admin/district.list?amount=10|403|error.message|You don't have access to this part.|
+      |/admin/notifications.list?amount=10|403|error.message|You don't have access to this part.|
+      |/admin/passengers.list?amount=100  |200|"total"      |"fromDB"                           |
+      |/admin/statistic?date=2018-06|200|company_turnover.today|0|
+
+
+
+
+
 
 
 

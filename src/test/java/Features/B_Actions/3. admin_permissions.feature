@@ -1,5 +1,5 @@
 Feature: admin_permissions
-
+@NeedTo
   Scenario: /admin/role.add
     Given sending /admin/role request with data
     |"AutoRole"|"statistics"|"users"|

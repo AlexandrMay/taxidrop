@@ -1,6 +1,6 @@
 Feature: admin_registration
 
-
+@NeedTo
   Scenario: admin_add
     Given Sending admin_add request with
       |"base64"|"Auto"    |"Bot"    |"+380664853399"|"a.may@woxapp.com"|"pass"|1|
@@ -29,7 +29,7 @@ Feature: admin_registration
      |"true" |"base64"|"Auto"    |"Bot"    |"+380664853397"|"maysalexandr1@gmail.com"|"pass"|/admin/admin.add| 10  |404|error.message|Role with ID '10' does not exist.|
      |"true" |"base64"|"Auto"    |"Bot"    |"+380664853397"|"maysalexandr1@gmail.com"|"pass"|/admin/admin.ad| 1  |404|message|Requested resource were not found at given endpoint.|
      |"true" |"base64"|"Auto"    |"Bot"    |"+380664853397"|"maysalexandr1@gmail.com"|"anypass"|/admin/admin.add| 1  |400|error.message|Incorrect request body. Parameters: 'password' are malformed or incorrect.|
-
+@NeedTo
   Scenario: admin_authorization
       Given Sending request with generated API key for admin using
       |"a.may@woxapp.com"|"pass"|

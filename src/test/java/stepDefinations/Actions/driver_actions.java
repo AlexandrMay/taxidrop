@@ -21,7 +21,7 @@ public class driver_actions extends ReusableMethods {
 
     @Given("^Sending request with correct token$")
     public void sending_request_with_correct_token() throws Throwable {
-        data.request = given().header("Authorization", "Bearer " + properties.getProperty("driver_one")).header("Content-Type", "application/json");
+        data.request = given().header("Authorization", "Bearer " + getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties")).header("Content-Type", "application/json");
     }
 
     @When("^GET request is sent$")
@@ -40,7 +40,7 @@ public class driver_actions extends ReusableMethods {
     @Given("^Sending profile.edit request with correct token and using (.+), (.+), (.+), (.+), (.+) parameters$")
     public void sending_profileedit_request_with_correct_token_and_using_parameters(String token, String photo, String first_name, String last_name, String email) throws Throwable {
         if (token.equals("\"bearer\"")) {
-            resultToken = properties.getProperty("driver_one");
+            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties");
         }
         else {
             resultToken = token;
@@ -52,7 +52,7 @@ public class driver_actions extends ReusableMethods {
     @Given("^Sending rating.info request using (.+)$")
     public void sending_ratinginfo_request_using(String token) throws Throwable {
         if (token.equals("\"bearer\"")) {
-            resultToken = properties.getProperty("driver_one");
+            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties");
         }
         else {
             resultToken = token;
@@ -70,7 +70,7 @@ public class driver_actions extends ReusableMethods {
     @Given("^Sending pass.change request using (.+), (.+), (.+)$")
     public void sending_passchange_request_using_(String token, String password, String passwordold) throws Throwable {
         if (token.equals("\"bearer\"")) {
-            resultToken = properties.getProperty("driver_one");
+            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties");
         }
         else {
             resultToken = token;
@@ -82,7 +82,7 @@ public class driver_actions extends ReusableMethods {
     @Given("^Sending profile.delete request using (.+)$")
     public void sending_profiledelete_request_using(String token) throws Throwable {
         if (token.equals("\"bearer\"")) {
-            resultToken = properties.getProperty("driver_one");
+            resultToken = getTempProperty("driverAuthorizationToken", "src/main/java/Properties/token.properties");
         }
         else {
             resultToken = token;
