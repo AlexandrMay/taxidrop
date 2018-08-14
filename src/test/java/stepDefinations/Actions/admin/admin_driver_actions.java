@@ -1,4 +1,4 @@
-package stepDefinations.Actions;
+package stepDefinations.Actions.admin;
 
 import Properties.ReusableMethods;
 import cucumber.api.java.en.And;
@@ -35,8 +35,6 @@ public class admin_driver_actions extends ReusableMethods {
     public void count_of_drivers_equals_to_db() throws Throwable {
         data.json = data.response.then().body("\"total\"", equalTo(data.drivers()));
     }
-
-
 
 
 

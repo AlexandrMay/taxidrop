@@ -8,11 +8,12 @@ import java.util.List;
 
 public class test extends ReusableMethods {
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
-      //  SQL sql = new SQL();
+        SQL sql = new SQL();
     ///    sql.getIntData("SELECT * FROM roles WHERE name = 'test_role'", "id");
-
-        Redis redis = new Redis();
-        redis.getInfo();
+      //  sql.setData("UPDATE notifications SET status = 0 WHERE notifications.id = 1");
+sql.getIntArrayData("SELECT * FROM notifications WHERE user_id = 2", "id");
+//        Redis redis = new Redis();
+//        redis.getInfo();
 
 
 

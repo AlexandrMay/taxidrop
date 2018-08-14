@@ -2,7 +2,7 @@ package Properties;
 
 
 import java.sql.*;
-
+import java.util.ArrayList;
 
 
 public class SQL extends ReusableMethods {
@@ -26,7 +26,30 @@ public class SQL extends ReusableMethods {
         return dbConnection;
     }
 
-    public static int getCountData(String request) throws SQLException {
+    public void setData(String request) throws SQLException {
+        String selectTableSQL = request;
+        Connection dbConnection = null;
+        Statement statement = null;
+        try {
+            dbConnection = getDBConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(selectTableSQL);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+        }
+    }
+
+
+    public int getCountData(String request) throws SQLException {
         int count = 0;
         String selectTableSQL = request;
         Connection dbConnection = null;
@@ -58,7 +81,7 @@ public class SQL extends ReusableMethods {
         }
         return count;
     }
-    public static int getIntData(String request, String columnName) throws SQLException {
+    public int getIntData(String request, String columnName) throws SQLException {
         int count = 0;
         String selectTableSQL = request;
         Connection dbConnection = null;
@@ -84,5 +107,37 @@ public class SQL extends ReusableMethods {
             }
         }
         return count;
+    }
+
+    public ArrayList<Integer> getIntArrayData(String request, String columnName) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+
+        String selectTableSQL = request;
+        Connection dbConnection = null;
+        Statement statement = null;
+
+        try {
+            dbConnection = getDBConnection();
+            statement = dbConnection.createStatement();
+            ResultSet rs = statement.executeQuery(selectTableSQL);
+            while (rs.next()) {
+                list.add(rs.getInt(columnName));
+//                for (int i = 0; i < list.size(); i++) {
+//                    System.out.println(list.get(i));
+//                }
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+        }
+        return list;
     }
 }

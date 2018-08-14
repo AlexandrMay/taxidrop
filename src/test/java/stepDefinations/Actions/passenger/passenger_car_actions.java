@@ -1,4 +1,4 @@
-package stepDefinations.Actions;
+package stepDefinations.Actions.passenger;
 
 import Properties.ReusableMethods;
 import cucumber.api.DataTable;

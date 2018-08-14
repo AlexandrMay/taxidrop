@@ -10,7 +10,7 @@ Feature: admin_actions
     |"true"|/admin/admins.list?amount=10|200|"total"|"fromDB"|
     |"true"|/admin/admins.list?amount=0|400|error.message|Incorrect request body. Parameters: 'amount' are malformed or incorrect.|
     |false|/admin/admins.list?amount=10|401|error.message|Authentication key: 'false' is incorrect.|
-  @NeedTo
+
   Scenario Outline: /admin/admin.edit
     Given sending /admin/admin.edit request with <token>, <photo>, <first_name>, <last_name>, <phone_number>, <email>, <role_id>
     When PUT /admin/admin.edit request with <resource> and <id> is sent
@@ -31,7 +31,7 @@ Feature: admin_actions
     |"true"|"base64"|"Auto"|"Bot"|"+380664853399"|"a.may@woxapp.com"|0|/admin/admin.edit/|"true"|404|error.message|Role with ID '0' does not exist.|
     |"true"|"base64"|"Auto"|"Bot"|"+380664853399"|"a.may@woxapp.com"|""|/admin/admin.edit/|"true"|400|error.message|Incorrect request body. Parameters: 'role_id' are required.|
 
-@NeedTo
+
     Scenario Outline: checking permissions for admin
       Given sending different requests using admin_token
       When GET request send to <resource>

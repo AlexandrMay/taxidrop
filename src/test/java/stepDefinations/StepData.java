@@ -7,6 +7,7 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class StepData extends SQL {
 
@@ -23,20 +24,23 @@ public class StepData extends SQL {
     public static String driversRefferralCode;
     public static int roleId;
     public static int passengerCarId;
+    public static int passengerAddressId;
     public static int driverCarId;
 
 
     public static String driverRegistrationToken;
     public static String passengerRegistrationToken;
 
-    public static int admins() throws SQLException {return getCountData("SELECT COUNT(*) FROM administrators");}
-    public static int drivers() throws SQLException {return getCountData("SELECT COUNT(*) FROM users WHERE type = 0");}
-    public static int roles() throws SQLException {return getCountData("SELECT COUNT(*) FROM roles");}
-    public static int driverApplications() throws SQLException {return getCountData("SELECT COUNT(*) FROM users WHERE type = 0 AND status = 0 OR status = 1");}
-    public static int passengers() throws SQLException {return getCountData("SELECT COUNT(*) FROM users WHERE type = 1 OR type = 2");}
-    public static int ownerApplications() throws SQLException {return getCountData("SELECT COUNT(*) FROM users WHERE type = 1 AND status = 0 OR status = 1");}
-    public static int roleId() throws SQLException {return getIntData("SELECT * FROM roles WHERE name = 'AutoRole'", "id");}
-    public static int carId(int ownerId) throws SQLException {return getIntData("SELECT * FROM cars WHERE owner_id = " + ownerId + "" , "id");}
+    public int admins() throws SQLException {return getCountData("SELECT COUNT(*) FROM administrators");}
+    public int drivers() throws SQLException {return getCountData("SELECT COUNT(*) FROM users WHERE type = 0");}
+    public int roles() throws SQLException {return getCountData("SELECT COUNT(*) FROM roles");}
+    public int notifications() throws SQLException {return getCountData("SELECT COUNT(*) FROM notifications");}
+    public int driverApplications() throws SQLException {return getCountData("SELECT COUNT(*) FROM users WHERE type = 0 AND status = 0 OR status = 1");}
+    public int passengers() throws SQLException {return getCountData("SELECT COUNT(*) FROM users WHERE type = 1 OR type = 2");}
+    public int ownerApplications() throws SQLException {return getCountData("SELECT COUNT(*) FROM users WHERE type = 1 AND status = 0 OR status = 1");}
+    public int roleId() throws SQLException {return getIntData("SELECT * FROM roles WHERE name = 'AutoRole'", "id");}
+    public int carId(int ownerId) throws SQLException {return getIntData("SELECT * FROM cars WHERE owner_id = " + ownerId + "" , "id");}
+    public int addressId() throws SQLException {return getIntData("SELECT * FROM addresses WHERE name = 'Bot’s address'", "id");}
 
 
 

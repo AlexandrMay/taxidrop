@@ -97,6 +97,7 @@ public class admin_registration extends ReusableMethods {
 
     @And("^Response contains (.+) and (.+)$")
     public void response_contains_and(String errorkey, String errortext) throws Throwable {
+
         if (StringUtils.isNumeric(errortext)) {
             data.json = data.response.then().body(errorkey, equalTo(Integer.parseInt(errortext)));
         } else {
@@ -104,7 +105,6 @@ public class admin_registration extends ReusableMethods {
         }
 
     }
-
 
     //admin_authorization
 
