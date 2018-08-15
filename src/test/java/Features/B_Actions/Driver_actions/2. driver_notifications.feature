@@ -1,5 +1,5 @@
 Feature: driver_notifications
-  @NeedTo
+
   Scenario Outline: /driver/notification.info
     Given sending /driver/notification request using <token>
     When GET request send to <resource>
@@ -10,7 +10,7 @@ Feature: driver_notifications
       |"true"|/driver/notification.info/1|200|"id"|1|
       |"true"|/driver/notification.info/0|404|error.message|Notification with ID '0' not found.|
       |false |/driver/notification.info/1|401|error.message|Authentication key: 'false' is incorrect.|
-  @NeedTo
+
   Scenario Outline: /driver/notification.list
     Given sending /driver/notification request using <token>
     When GET request send to <resource>
@@ -21,7 +21,7 @@ Feature: driver_notifications
       |"true"|/driver/notification.list?amount=100|200|"id"|"fromDB"|
       |"true"|/driver/notification.list?amount=0|400|error.message|Incorrect request body. Parameters: 'amount' are malformed or incorrect.|
       |false |/driver/notification.list?amount=100|401|error.message|Authentication key: 'false' is incorrect.|
-  @NeedTo
+
   Scenario Outline: /driver/notification.count
     Given sending /driver/notification request using <token>
     When GET request send to <resource>

@@ -6,8 +6,8 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class StepData extends SQL {
 
@@ -17,15 +17,27 @@ public class StepData extends SQL {
     public String r;
     public JsonPath js;
 
+    public int passengerId;
+    {
+        try {
+
+            passengerId = Integer.parseInt(getTempProperty("passengerID", "src/main/java/Properties/IDs.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static int adminId;
-    public static int passengerId;
+
     public static int driverID;
     public static String driversRefferralCode;
     public static int roleId;
     public static int passengerCarId;
     public static int passengerAddressId;
+    public static int passengerRouteId;
     public static int driverCarId;
+
 
 
     public static String driverRegistrationToken;

@@ -25,6 +25,7 @@ public class passenger_actions extends ReusableMethods {
     private String resultToken;
     private String resultPassword;
     private String resultPasswordOld;
+    private ArrayList<Integer> list = new ArrayList<Integer>();
 
     SQL sql = new SQL();
 
@@ -188,5 +189,145 @@ public class passenger_actions extends ReusableMethods {
             data.json = data.response.then().body(key, equalTo(value));
         }
     }
+
+    @Given("^sending /passenger/route.add request using (.+), (.+), (.+), (.+), (.+), (.+)$")
+    public void sending_passengerrouteadd_request_using_(String token, String polyline, String street, String streetnumber, float lat, float lng) throws Throwable {
+        if (token.equals("\"true\"")){
+            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");
+        } else {
+            resultToken = token;
+        }
+        data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json").
+                body("{" +
+                        "\"route\": {" +
+                            "\"polyline\": " + polyline + "," +
+                            "\"route_points\": [" +
+                        "{" +
+                            "\"street\": " + street + "," +
+                            "\"street_number\": " + streetnumber + "," +
+                            "\"coords\": {" +
+                                "\"lat\": " + lat + "," +
+                                "\"lng\": " + lng + "}" +
+                                            "}" +
+                                            "]" +
+                                        "}" +
+                                        "}");
+    }
+
+    @And("^Response /passenger/route.add contains (.+) and (.+)$")
+    public void response_passengerrouteadd_contains_and(String key, String value) throws Throwable {
+        if (value.equals("\"fromDB\"")) {
+            data.json = data.response.then().body(key, equalTo(sql.getIntData("SELECT * FROM routes WHERE user_id = " + data.passengerId + "", "id")));
+            data.js = rawToJson(data.json);
+            data.passengerRouteId = data.js.get("route_id");
+
+        } else {
+            data.json = data.response.then().body(key, equalTo(value));
+        }
+
+    }
+
+
+    @When("^When PUT /passenger/route.edit request with (.+) and (.+) is sent$")
+    public void when_put_passengerrouteedit_request_with_and_is_sent(String resource, String id) throws Throwable {
+        int resultId;
+        if (id.equals("\"routeId\"")) {
+            resultId = data.passengerRouteId;
+        } else {
+            resultId = Integer.parseInt(id);
+        }
+        data.response = data.request.when().put(resource + resultId);
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+
+    @Given("^sending /passenger/route request using (.+)$")
+    public void sending_passengerroute_request_using(String token) throws Throwable {
+        if (token.equals("\"true\"")){
+            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");;
+        } else {
+            resultToken = token;
+        }
+        data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json");
+    }
+
+    @And("^Response /passenger/route.list contains (.+) and (.+)$")
+    public void response_passengerroutelist_contains_and(String key, String value) throws Throwable {
+        list = sql.getIntArrayData("SELECT * FROM routes WHERE user_id = " + data.passengerId + "", "id");
+        if (value.equals("\"fromDB\"")) {
+            data.json = data.response.then().body(key, equalTo(list));
+        } else {
+            data.json = data.response.then().body(key, equalTo(value));
+        }
+    }
+
+    @When("^GET /passenger/route.info request with (.+) and (.+) is sent$")
+    public void get_passengerrouteinfo_request_with_and_is_sent(String resource, String id) throws Throwable {
+        int resultId;
+        if (id.equals("\"routeId\"")) {
+            resultId = data.passengerRouteId;
+        } else {
+            resultId = Integer.parseInt(id);
+        }
+        data.response = data.request.when().get(resource + resultId);
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @And("^Response /passenger/route.info contains (.+) and (.+)$")
+    public void response_passengerrouteinfo_contains_and(String key, String value) throws Throwable {
+        if (value.equals("\"routeId\"")) {
+            data.json = data.response.then().body(key, equalTo(data.passengerRouteId));
+        } else {
+            data.json = data.response.then().body(key, equalTo(value));
+        }
+    }
+
+    @Given("^sending /passenger/route.delete request using (.+)$")
+    public void sending_passengerroutedelete_request_using(String token) throws Throwable {
+        if (token.equals("\"true\"")){
+            resultToken = getTempProperty("passengerAuthorizationToken", "src/main/java/Properties/token.properties");;
+        } else {
+            resultToken = token;
+        }
+        data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json");
+    }
+
+    @When("^DELETE /passenger/route.delete with (.+) and (.+) is sent$")
+    public void delete_passengerroutedelete_with_and_is_sent(String resource, String id) throws Throwable {
+        int resultId;
+        if (id.equals("\"routeId\"")) {
+            resultId = data.passengerRouteId;
+        } else {
+            resultId = Integer.parseInt(id);
+        }
+        data.response = data.request.when().delete(resource + resultId);
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+    @When("^DELETE /passenger/address.delete with (.+) and (.+) is sent$")
+    public void delete_passengeraddressdelete_with_and_is_sent(String resource, String id) throws Throwable {
+        int resultId;
+        if (id.equals("\"addressId\"")) {
+            resultId = data.passengerAddressId;
+        } else {
+            resultId = Integer.parseInt(id);
+        }
+        data.response = data.request.when().delete(resource + resultId);
+        System.out.println(data.response.prettyPrint());
+        data.r = rawToString(data.response);
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

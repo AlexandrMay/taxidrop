@@ -45,7 +45,9 @@ public class passenger_registration extends ReusableMethods {
     @And("^Response contains id of passenger$")
     public void response_contains_id_of_passenger() throws Throwable {
         data.js = rawToJson(data.json);
-        data.passengerId = data.js.get("user_id");
+        int passengerId = data.js.get("user_id");
+        props.setProperty("passengerID", String.valueOf(passengerId));
+        setSomePropertyToFile("src/main/java/Properties/IDs.properties");
     }
 
     @Given("^Sending request with FB token to confirm passengers number$")
