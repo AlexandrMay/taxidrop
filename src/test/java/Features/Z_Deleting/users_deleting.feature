@@ -14,7 +14,7 @@ Feature: users deleting
   Scenario: deleting admin
     Given Sending request to delete admin
     When DELETE request send
-    Then Status-code "200" is received
+    Then Status_code is 200
 
 
   Scenario Outline: admin/passenger.delete

@@ -120,11 +120,6 @@ public class admin_registration extends ReusableMethods {
         data.r = rawToString(data.response);
     }
 
-    @Then("^Status-code \"([^\"]*)\" is received$")
-    public void statuscode_something_is_received(int strArg1) throws Throwable {
-        data.json = data.response.then().assertThat().statusCode(strArg1);
-    }
-
     @And("^Response contains authorization token$")
     public void response_contains_authorization_token() throws Throwable {
         data.js = rawToJson(data.json);

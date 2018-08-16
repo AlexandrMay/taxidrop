@@ -11,7 +11,7 @@ Feature: driver_car_actions
   Scenario Outline: /driver/car.add with errors
     Given sending /driver/car.add request using <token>, <make>, <model>, <license_plate_number>, <car_photo>, <proof_of_ownership>, <insurance>
     When POST request send to <resource>
-    Then Status-code "<status_code>" is received
+    Then Statuscode <status_code> is received
     And Response contains <key> and <value>
     Examples:
       |token|make|model|license_plate_number|car_photo|proof_of_ownership|insurance|resource|status_code|key|value|
@@ -28,7 +28,7 @@ Feature: driver_car_actions
   Scenario Outline: /driver/cars.list
     Given sending /driver/cars.list request using <token>
     When GET request send to <resource>
-    Then Status-code "<status_code>" is received
+    Then Statuscode <status_code> is received
     And Response contains <key> and <value>
     Examples:
       |token|resource|status_code|key|value|
@@ -38,7 +38,7 @@ Feature: driver_car_actions
   Scenario Outline: /driver/car.delete
     Given sending /driver/car.delete request using <token>
     When DELETE /driver/car.delete request with <resource> and <car_id> is sent
-    Then Status-code "<status_code>" is received
+    Then Statuscode <status_code> is received
     And Response contains <key> and <value>
     Examples:
       |token|car_id|resource|status_code|key|value|

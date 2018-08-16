@@ -12,7 +12,7 @@ Feature: features_deleting
       |false|/admin/role.delete/|"roleID"|401|error.message|Authentication key: 'false' is incorrect.|
 
 
-  @NeedTo
+
   Scenario Outline: /passenger/route.delete
     Given sending /passenger/route.delete request using <token>
     When DELETE /passenger/route.delete with <resource> and <id> is sent
@@ -24,7 +24,7 @@ Feature: features_deleting
       |"true"|/passenger/route.delete/|0|404|error.message|Route with ID '0' not found.|
       |false|/passenger/route.delete/|"routeId"|401|error.message|Authentication key: 'false' is incorrect.|
 
-    @NeedTo
+
   Scenario Outline: /passenger/address.delete
     Given sending /passenger/route.delete request using <token>
     When DELETE /passenger/address.delete with <resource> and <id> is sent

@@ -10,7 +10,7 @@ Feature: passenger_car_actions
     Scenario Outline: /passenger/car.add with errors
       Given sending /passenger/car.add request using <token>, <make>, <model>, <license_plate_number>, <car_photo>, <proof_of_ownership>, <insurance>
       When POST request send to <resource>
-      Then Status-code "<status_code>" is received
+      Then Statuscode <status_code> is received
       And Response contains <key> and <value>
       Examples:
       |token|make|model|license_plate_number|car_photo|proof_of_ownership|insurance|resource|status_code|key|value|
@@ -28,7 +28,7 @@ Feature: passenger_car_actions
   Scenario Outline: /passenger/cars.list
     Given sending /passenger/cars.list request using <token>
     When GET request send to <resource>
-    Then Status-code "<status_code>" is received
+    Then Statuscode <status_code> is received
     And Response contains <key> and <value>
     Examples:
     |token|resource|status_code|key|value|
@@ -38,7 +38,7 @@ Feature: passenger_car_actions
   Scenario Outline: /passenger/car.delete
     Given sending /passenger/car.delete request using <token>
     When DELETE /passenger/car.delete request with <resource> and <car_id> is sent
-    Then Status-code "<status_code>" is received
+    Then Statuscode <status_code> is received
     And Response contains <key> and <value>
     Examples:
     |token|car_id|resource|status_code|key|value|

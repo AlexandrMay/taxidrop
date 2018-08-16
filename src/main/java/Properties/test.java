@@ -4,14 +4,20 @@ import sun.applet.Main;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class test extends ReusableMethods {
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
         SQL sql = new SQL();
+        ArrayList<Integer> list = new ArrayList<Integer>();
     ///    sql.getIntData("SELECT * FROM roles WHERE name = 'test_role'", "id");
       //  sql.setData("UPDATE notifications SET status = 0 WHERE notifications.id = 1");
-sql.getIntArrayData("SELECT * FROM notifications WHERE user_id = 2", "id");
+        int counter = sql.getCountData("SELECT COUNT(*) FROM notifications WHERE type = 15 AND creator_id = 1");
+        for (int i = 0; i < counter; i++) {
+            list.add(i, 2);
+            System.out.println(list.get(i));
+        }
 //        Redis redis = new Redis();
 //        redis.getInfo();
 
