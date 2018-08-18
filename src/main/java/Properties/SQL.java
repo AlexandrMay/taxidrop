@@ -109,6 +109,34 @@ public class SQL extends ReusableMethods {
         return count;
     }
 
+    public String getString(String request, String column_name) throws SQLException {
+        String count = null;
+        String selectTableSQL = request;
+        Connection dbConnection = null;
+        Statement statement = null;
+
+        try {
+            dbConnection = getDBConnection();
+            statement = dbConnection.createStatement();
+            ResultSet rs = statement.executeQuery(selectTableSQL);
+            while (rs.next()) {
+                count = rs.getString(column_name);
+                System.out.println(count);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (dbConnection != null) {
+                dbConnection.close();
+            }
+        }
+        return count;
+    }
+
     public ArrayList<Integer> getIntArrayData(String request, String columnName) throws SQLException {
         ArrayList<Integer> list = new ArrayList<Integer>();
 

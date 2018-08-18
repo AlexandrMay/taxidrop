@@ -172,7 +172,7 @@ Feature: setting_car_to_driver
       |token|resource|status_code|key|value|
       |"true"|/driver/car.broken/2|404|error.message|Car with ID '2' does not exist.|
 
-  
+
   Scenario Outline: /admin/driver.unset
     Given sending /admin/driver using <token>
     When PUT request send to <resource>

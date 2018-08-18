@@ -33,7 +33,7 @@ public class passenger_car_actions extends ReusableMethods {
 
     @And("^id of car equals to DB$")
     public void id_of_car_equals_to_db() throws Throwable {
-        data.json = data.response.then().body("\"car_id\"", equalTo(data.carId(29)));
+        data.json = data.response.then().body("\"car_id\"", equalTo(data.carId(data.passengerId)));
         data.js = rawToJson(data.json);
         data.passengerCarId = data.js.get("car_id");
     }
@@ -80,7 +80,11 @@ public class passenger_car_actions extends ReusableMethods {
     @When("^DELETE /passenger/car.delete request with (.+) and (.+) is sent$")
     public void delete_passengercardelete_request_with_and_is_sent(String resource, String carid) throws Throwable {
         int resultId;
-        if (carid.equals("\"true\"")) {
+        if (carid.equals("\"id\"")) {
+            resultId = data.passengerCarId;
+        } else if (carid.equals("\"id1\"")) {
+            resultId = data.passengerCarId + 1;
+        } else if (carid.equals("\"id2\"")) {
             resultId = data.passengerCarId + 2;
         } else {
             resultId = Integer.parseInt(carid);
@@ -90,10 +94,16 @@ public class passenger_car_actions extends ReusableMethods {
         data.r = rawToString(data.response);
     }
 
-
-
-
-
+    @And("^Response /passenger/car.add contains (.+) and (.+)$")
+    public void response_passengercaradd_contains_and(String key, String value) throws Throwable {
+        if (value.equals("\"id1\"")) {
+            data.json = data.response.then().body(key, equalTo(data.passengerCarId + 1));
+        } else if (value.equals("\"id2\"")) {
+            data.json = data.response.then().body(key, equalTo(data.passengerCarId + 2));
+        } else {
+            data.json = data.response.then().body(key, equalTo(value));
+        }
+    }
 }
 
 

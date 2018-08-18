@@ -4,7 +4,7 @@ Feature: driver_actions
   Scenario: driver/profile.info
     Given Sending request with correct token
     When GET request is sent
-    Then Status-code "200" is received
+    Then Status_code is 200
     And Response contains referral code
 
   Scenario Outline: profile.edit
@@ -50,6 +50,44 @@ Feature: driver_actions
     |"bearer"|"123"|"25d55ad283aa400af464c76d713c07ad"|400|error.message|Incorrect request body. Parameters: 'password' are malformed or incorrect.|
     |"bearer"|"4e34b28fa8c19987a04b68f314844b20"|"123"|400|error.message|Incorrect request body. Parameters: 'password_old' are malformed or incorrect.|
     |"bearer"|"25d55ad283aa400af464c76d713c07ad"|"4e34b28fa8c19987a04b68f314844b20"|400|error.message|Old password is incorrect.|
+
+  @Go
+  Scenario Outline: /driver/district.list
+    Given sending /driver/district.list request using <token>
+    When GET request send to <resource>
+    Then Statuscode <status_code> is received
+    And Response of /driver/district.list contains <key> and <value>
+    Examples:
+      |token|resource|status_code|key|value|
+      |"true"|/driver/district.list/1|200|"id"|"fromDB"|
+      |"true"|/driver/district.list/0|404|error.message|ErrorText|
+      |false|/driver/district.list/1|401|error.message|Authentication key: 'false' is incorrect.|
+  @Go
+  Scenario Outline: /countries.list
+    Given sending /countries.list request using <token>
+    When GET request send to <resource>
+    Then Statuscode <status_code> is received
+    And Response of /countries.list contains <key> and <value>
+    Examples:
+      |token|resource|status_code|key|value|
+      |"true"|/countries.list|200|"id"|"fromDB"|
+      |false|/countries.list|412|error.message|Incorrect request headers. Headers: 'Key' are malformed or incorrect.|
+  @Go
+  Scenario Outline: /driver/district.block
+    Given sending /driver/district.block using <token> and of districts contains <district1>, <district2>, <district3>
+    When PUT request send to <resource>
+    Then Statuscode <status_code> is received
+    And Response contains <key> and <value>
+    Examples:
+    |token|district1|district2|district3|resource|status_code|key|value|
+    |"true"|1|3|5|driver/district.block/1|200|"success"|200|
+    |"true"|1|3|5|driver/district.block/0|404|error.message|City with ID. '0' not found in system.|
+    |"true"|1|2|3|driver/district.block/1|404|error.message|Districts with ID. '2' not found in system.|
+    |false|1|3|5|driver/district.block/1|401|error.message|Authentication key: 'false' is incorrect.|
+    |"true"|0|0|0|driver/district.block/1|200|"success"|200|
+
+
+
 
 
 

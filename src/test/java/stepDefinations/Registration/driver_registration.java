@@ -25,7 +25,9 @@ public class driver_registration extends ReusableMethods {
     @And("^Response contains id of driver$")
     public void response_contains_id_of_driver() throws Throwable {
         data.js = rawToJson(data.json);
-        data.driverID = data.js.get("user_id");
+        int driverID = data.js.get("user_id");
+        props.setProperty("driverID", String.valueOf(driverID));
+        setSomePropertyToFile("src/main/java/Properties/IDs.properties");
     }
 
     @Given("^Sending request to register driver with correct token and with parameters$")

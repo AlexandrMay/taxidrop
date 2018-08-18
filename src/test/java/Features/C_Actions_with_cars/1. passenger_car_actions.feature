@@ -11,11 +11,11 @@ Feature: passenger_car_actions
       Given sending /passenger/car.add request using <token>, <make>, <model>, <license_plate_number>, <car_photo>, <proof_of_ownership>, <insurance>
       When POST request send to <resource>
       Then Statuscode <status_code> is received
-      And Response contains <key> and <value>
+      And Response /passenger/car.add contains <key> and <value>
       Examples:
       |token|make|model|license_plate_number|car_photo|proof_of_ownership|insurance|resource|status_code|key|value|
-      |"true"|"Tesla"|"model x"|"ABC-123 D" |"base64" |"base64"|"base64" |/passenger/car.add|200| |     |
-      |"true"|"Tesla"|"model x"|"ABC-123 D" |"base64" |"base64"|"base64" |/passenger/car.add|200| |     |
+      |"true"|"Tesla"|"model x"|"ABC-123 D" |"base64" |"base64"|"base64" |/passenger/car.add|200|"car_id"|"id1"|
+      |"true"|"Tesla"|"model x"|"ABC-123 D" |"base64" |"base64"|"base64" |/passenger/car.add|200|"car_id"|"id2"|
       |"true"|"Tesla"|"model x"|"ABC-123 D" |"base64" |"base64"|"base64" |/passenger/car.add|400|error.message|Maximum number of cars.|
       |false|"Tesla"|"model x"|"ABC-123 D" |"base64" |"base64"|"base64" |/passenger/car.add|401|error.message|Authentication key: 'false' is incorrect.|
       |"true"|""|"model x"|"ABC-123 D" |"base64" |"base64"|"base64" |/passenger/car.add|400|error.message|Incorrect request body. Parameters: 'make' are required.|
@@ -41,10 +41,13 @@ Feature: passenger_car_actions
     Then Statuscode <status_code> is received
     And Response contains <key> and <value>
     Examples:
-    |token|car_id|resource|status_code|key|value|
-    |"true"|"true"|/passenger/car.delete/|200|"success"|200|
-    |"true"|0|/passenger/car.delete/|404|error.message|Car with ID '0' does not exist.|
-    |false|"true"|/passenger/car.delete/|401|error.message|Authentication key: 'false' is incorrect.|
+      |token|car_id|resource|status_code|key|value|
+      |"true"|"id"|/passenger/car.delete/|200|"success"|200|
+      |"true"|"id1"|/passenger/car.delete/|200|"success"|200|
+      |"true"|"id2"|/passenger/car.delete/|200|"success"|200|
+      |"true"|0|/passenger/car.delete/|404|error.message|Car with ID '0' does not exist.|
+      |false|"id1"|/passenger/car.delete/|401|error.message|Authentication key: 'false' is incorrect.|
+
 
 
 

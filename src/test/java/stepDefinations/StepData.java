@@ -18,9 +18,15 @@ public class StepData extends SQL {
     public JsonPath js;
 
     public int passengerId;
+    public int driverID;
+
     {
         try {
-
+            driverID = Integer.parseInt(getTempProperty("driverID", "src/main/java/Properties/IDs.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
             passengerId = Integer.parseInt(getTempProperty("passengerID", "src/main/java/Properties/IDs.properties"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -29,14 +35,14 @@ public class StepData extends SQL {
 
 
     public static int adminId;
-
-    public static int driverID;
     public static String driversRefferralCode;
     public static int roleId;
     public static int passengerCarId;
     public static int passengerAddressId;
     public static int passengerRouteId;
+    public static int passengerBankId;
     public static int driverCarId;
+    public static int driverBankId;
 
 
 

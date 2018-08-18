@@ -3,14 +3,14 @@ Feature: driver_registration
   Scenario: phone/confirm
     Given Sending request with FB token to confirm drivers number
     When POST request phone.confirm is sent
-    Then Status-code "200" is received
+    Then Status_code is 200
     And Response contains drivers registration token
 
   Scenario: driver/registration
     Given Sending request to register driver with correct token and with parameters
       |"Auto"|"Driver"|"maysalexandr@i.ua"|"+79653944057"|"driverpass"|""|"base64"|"base64"|"base64"|"AUTO123"|"2010-01-01"|"2030-02-01"|"Tavria"|"Nova"|"AUTO-123 R"|"base64"|"base64"|"base64"|"Privat"|"23423423423"|"robo driver"|"2345/3453/345"|"+234857463284"|
     When POST request driver/registration send to correct resource
-    Then Status-code "200" is received
+    Then Status_code is 200
     And Response contains id of driver
 
   Scenario Outline: driver/registration with errors
@@ -33,7 +33,7 @@ Feature: driver_registration
     Given sending driver/authorization request using
       |0|"+79653944057"|"driverpass"|
     When POST request driver/authorization is sent
-    Then Status-code "200" is received
+    Then Status_code is 200
     And Response contains drivers authorization token
 
 

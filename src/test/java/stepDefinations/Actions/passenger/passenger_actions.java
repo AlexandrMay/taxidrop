@@ -320,6 +320,28 @@ public class passenger_actions extends ReusableMethods {
         data.r = rawToString(data.response);
     }
 
+    @Given("^sending /passenger/district.list request using (.+)$")
+    public void sending_passengerdistrictlist_request_using(String token) throws Throwable {
+        if (token.equals("\"true\"")){
+            resultToken = properties.getProperty("first_passenger");
+        } else {
+            resultToken = token;
+        }
+        data.request = given().header("Authorization", "Bearer " + resultToken).header("Content-Type", "application/json");
+    }
+
+    @And("^Response of /passenger/district.list contains (.+) and (.+)$")
+    public void response_of_passengerdistrictlist_contains_and(String key, String value) throws Throwable {
+        list = sql.getIntArrayData("SELECT * FROM districts WHERE city_id = 1 AND enabled = 1", "id");
+        if (value.equals("\"fromDB\"")) {
+            data.json = data.response.then().body(key, equalTo(list));
+        } else {
+            data.json = data.response.then().body(key, equalTo(value));
+        }
+    }
+
+
+
 
 
 

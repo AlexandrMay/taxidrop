@@ -47,6 +47,20 @@ Scenario Outline: passenger/profile.info
     |"true"|"passengerpass"|null|/passenger/pass.change|400|error.message|Incorrect request body. Parameters: 'password_old' are required.|
     |"true"|"passengerpass"|"passengerpass"|/passenger/pass.change|404|error.code|77|
 
+  @Go
+  Scenario Outline: /passenger/district.list
+    Given sending /passenger/district.list request using <token>
+    When GET request send to <resource>
+    Then Statuscode <status_code> is received
+    And Response of /passenger/district.list contains <key> and <value>
+    Examples:
+    |token|resource|status_code|key|value|
+    |"true"|/passenger/district.list/1|200|"id"|"fromDB"|
+    |"true"|/passenger/district.list/0|404|error.message|ErrorText|
+    |false|/passenger/district.list/1|401|error.message|Authentication key: 'false' is incorrect.|
+
+
+
 
 
 

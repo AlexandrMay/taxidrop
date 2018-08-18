@@ -8,7 +8,7 @@ import redis.clients.jedis.exceptions.JedisException;
 public class Redis {
 
     //address of your redis server
-    private static final String redisHost = "10.0.0.3";
+    private static final String redisHost = "localhost";
     private static final Integer redisPort = 6379;
 
     //the jedis connection pool..

@@ -34,7 +34,7 @@ Feature: admin_registration
       Given Sending request with generated API key for admin using
       |"a.may@woxapp.com"|"pass"|
       When POST request send with authorization resource
-      Then Status-code "200" is received
+      Then Status_code is 200
       And Response contains authorization token
 
 
@@ -57,7 +57,7 @@ Feature: admin_registration
       Given Sending request with generated API key for admin with
       |"a.may@woxapp.com"|
       When PUT request /admin/password.recovery is sent
-      Then Status-code "200" is received
+      Then Status_code is 200
 
     Scenario Outline: admin_password_recovery errors
       Given Sending error request with <admin_token> using <email>

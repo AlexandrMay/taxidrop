@@ -4,7 +4,7 @@ Feature: passenger_registration
   Scenario: phone/confirm
     Given Sending request with FB token to confirm passengers number
     When POST request phone.confirm for passenger is sent
-    Then Status-code "200" is received
+    Then Status_code is 200
     And Response contains passengers registration token
 
 
@@ -26,7 +26,7 @@ Feature: passenger_registration
     Given Sending request with correct token and with parameters
     |"Auto"|"Passenger"|"+380639348839"|"buggserazzer@hotmail.com"|"passengerpass"|"1"|
     When POST request passenger/registration is sent
-    Then Status-code "200" is received
+    Then Status_code is 200
     And Response contains id of passenger
 
 
@@ -54,7 +54,7 @@ Feature: passenger_registration
       Given sending passenger/authorization request using
       |1|"+380639348839"|"passengerpass"|
       When POST request passenger/authorization is sent
-      Then Status-code "200" is received
+      Then Status_code is 200
       And Response contains passengers authorization token
 
 
