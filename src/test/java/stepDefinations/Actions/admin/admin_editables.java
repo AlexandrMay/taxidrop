@@ -262,4 +262,21 @@ public class admin_editables extends ReusableMethods {
     }
 
 
+    @And("^Response of /admin/faq.list contains (.+) and (.+)$")
+    public void response_of_adminfaqlist_contains_and(String key, String value) throws Throwable {
+        if (value.equals("\"type0\"")) {
+            list = sql.getIntArrayData("SELECT * FROM faqs WHERE type = 0", "id");
+            data.json = data.response.then().body(key, equalTo(list));
+        } else if (value.equals("\"type1\"")) {
+            list = sql.getIntArrayData("SELECT * FROM faqs WHERE type = 1", "id");
+            data.json = data.response.then().body(key, equalTo(list));
+        } else if (value.equals("\"type2\"")) {
+            list = sql.getIntArrayData("SELECT * FROM faqs WHERE type = 2", "id");
+            data.json = data.response.then().body(key, equalTo(list));
+        } else {
+            data.json = data.response.then().body(key, equalTo(value));
+        }
+    }
+
+
 }

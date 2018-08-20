@@ -173,6 +173,19 @@ Feature: admin_editables
     |false|"auto robot text"|/admin/about.edit|401|error.message|Authentication key: 'false' is incorrect.|
 
 
+@Go
+  Scenario Outline: /admin/faq.list
+    Given sending /admin/news request using <token>
+    When GET request send to <resource>
+    Then Statuscode <status_code> is received
+    And Response of /admin/faq.list contains <key> and <value>
+    Examples:
+      |token|resource|status_code|key|value|
+      |"true"|/admin/faq.list?type=0|200|"id"|"type0"|
+      |"true"|/admin/faq.list?type=1|200|"id"|"type1"|
+      |"true"|/admin/faq.list?type=2|200|"id"|"type2"|
+      |"true"|/admin/faq.list?type=3|400|error.message|Incorrect request body. Parameters: 'type' are malformed or incorrect.|
+      |false|/admin/faq.list?type=0|401|error.message|Authentication key: 'false' is incorrect.|
 
 
 
