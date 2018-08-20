@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
@@ -17,9 +18,9 @@ import java.util.Properties;
 public abstract class ReusableMethods {
 
 
-    public String passengerAdminToken() {return convert1(currentDate() + properties.getProperty("admin_passenger_token"));}
+    public String passengerAdminToken() {return convert1(currentDate("dd/MM/yyyy") + properties.getProperty("admin_passenger_token"));}
 
-    public String driverToken() {return convert1(currentDate() + properties.getProperty("driver_token"));}
+    public String driverToken() {return convert1(currentDate("dd/MM/yyyy") + properties.getProperty("driver_token"));}
 
     public static void setSomePropertyToFile(String path) throws IOException {
         FileOutputStream fis = new FileOutputStream(path);
@@ -39,9 +40,9 @@ public abstract class ReusableMethods {
     public static Properties temp = new Properties();
 
 
-    public String currentDate() {
+    public String currentDate(String pattern) {
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
 
@@ -71,6 +72,22 @@ public abstract class ReusableMethods {
     public static String rawToString(Response response) {
         String resp = response.asString();
         return resp;
+    }
+
+    public String currentTime(String pattern) {
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(date);
+    }
+
+    public static String someDate(String pattern, int amount) {
+        Date date = new Date();
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(date);
+        instance.add(Calendar.DAY_OF_MONTH, amount);
+        Date newDate = instance.getTime();
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(newDate);
     }
 
 }

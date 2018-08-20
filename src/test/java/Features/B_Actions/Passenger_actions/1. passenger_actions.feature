@@ -47,7 +47,7 @@ Scenario Outline: passenger/profile.info
     |"true"|"passengerpass"|null|/passenger/pass.change|400|error.message|Incorrect request body. Parameters: 'password_old' are required.|
     |"true"|"passengerpass"|"passengerpass"|/passenger/pass.change|404|error.code|77|
 
-  @Go
+
   Scenario Outline: /passenger/district.list
     Given sending /passenger/district.list request using <token>
     When GET request send to <resource>

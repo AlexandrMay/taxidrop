@@ -1,5 +1,5 @@
 Feature: driver_work_actions
-  @Go
+
   Scenario Outline: /driver/work.cars
     Given sending /driver/work request using <token>
     When GET request send to <resource>
@@ -9,7 +9,7 @@ Feature: driver_work_actions
     |token|resource|status_code|key|value|
     |"true"|/driver/work.cars|200|"id"|"fromDB"|
     |false|/driver/work.cars|401|error.message|Authentication key: 'false' is incorrect.|
-  @Go
+
   Scenario Outline: /driver/work.radius
     Given sending /driver/work.radius request using <token>, <radius>
     When PUT request send to <resource>
@@ -21,13 +21,13 @@ Feature: driver_work_actions
       |false|"1"|/driver/work.radius|401|error.message|Authentication key: 'false' is incorrect.|
       |"true"|"123"|/driver/work.radius|400|error.message|Incorrect request body. Parameters: 'radius' are malformed or incorrect.|
       |"true"|""|/driver/work.radius|400|error.message|Incorrect request body. Parameters: 'radius' are required.|
-  @Go
+
     Scenario: /driver/work.statistics
       Given sending /driver/work.statistics request
       When GET /driver/work.statistics request is sent
       Then Status_code is 200
       And Response contains data from DB
-  @Go
+
   Scenario Outline: /driver/work/closing.destination
     Given sending /driver/work/closing.destination request using <token>, <lat>, <lng>, <address>
     When PUT request send to <resource>

@@ -51,7 +51,7 @@ Feature: driver_actions
     |"bearer"|"4e34b28fa8c19987a04b68f314844b20"|"123"|400|error.message|Incorrect request body. Parameters: 'password_old' are malformed or incorrect.|
     |"bearer"|"25d55ad283aa400af464c76d713c07ad"|"4e34b28fa8c19987a04b68f314844b20"|400|error.message|Old password is incorrect.|
 
-  @Go
+
   Scenario Outline: /driver/district.list
     Given sending /driver/district.list request using <token>
     When GET request send to <resource>
@@ -62,7 +62,7 @@ Feature: driver_actions
       |"true"|/driver/district.list/1|200|"id"|"fromDB"|
       |"true"|/driver/district.list/0|404|error.message|ErrorText|
       |false|/driver/district.list/1|401|error.message|Authentication key: 'false' is incorrect.|
-  @Go
+
   Scenario Outline: /countries.list
     Given sending /countries.list request using <token>
     When GET request send to <resource>
@@ -72,7 +72,7 @@ Feature: driver_actions
       |token|resource|status_code|key|value|
       |"true"|/countries.list|200|"id"|"fromDB"|
       |false|/countries.list|412|error.message|Incorrect request headers. Headers: 'Key' are malformed or incorrect.|
-  @Go
+
   Scenario Outline: /driver/district.block
     Given sending /driver/district.block using <token> and of districts contains <district1>, <district2>, <district3>
     When PUT request send to <resource>

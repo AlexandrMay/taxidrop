@@ -30,7 +30,7 @@ Feature: passenger_payments_actions
       Examples:
         |token|amount|resource|status_code|key|value|
         |"true"|5000|/passenger/payment.withdraw|400|error.message|Incorrect request body. Parameters: 'amount' are malformed or incorrect.|
-@Go
+
     Scenario Outline: /passenger/bank.add
       Given sending /passenger/bank.add using <token>, <bank_name>, <bank_account>, <account_name>
       When POST request send to <resource>

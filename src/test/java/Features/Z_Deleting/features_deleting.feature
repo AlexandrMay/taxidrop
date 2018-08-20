@@ -47,7 +47,7 @@ Feature: features_deleting
       |"true"|"id2"|/passenger/car.delete/|200|"success"|200|
       |"true"|0|/passenger/car.delete/|404|error.message|Car with ID '0' does not exist.|
       |false|"true"|/passenger/car.delete/|401|error.message|Authentication key: 'false' is incorrect.|
-@Go
+
   Scenario Outline: /passenger/bank.delete
     Given sending /passenger/bank.delete request using <token>
     When DELETE /passenger/bank.delete request with <resource> and <bank_id> is sent

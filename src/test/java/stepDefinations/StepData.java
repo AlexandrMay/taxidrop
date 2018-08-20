@@ -35,6 +35,12 @@ public class StepData extends SQL {
 
 
     public static int adminId;
+    public static int adminCityId;
+    public static int adminDistrictId;
+    public static int adminNewsId;
+    public static int adminHelpId;
+
+
     public static String driversRefferralCode;
     public static int roleId;
     public static int passengerCarId;
